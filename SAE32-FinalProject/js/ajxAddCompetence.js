@@ -2,17 +2,17 @@ $(document).ready(function () {
 
   $("#btnOK").click(function () {
 
-    var idUTeacher     = $("select[name='idUTeacher']").val();
-    var idUStudent     = $("select[name='idUStudent']").val();
-    var idSkill        = $("select[name='idSkill']").val();
+    // var idUTeacher     = $("select[name='idUTeacher']").val();
+    // var idUStudent     = $("select[name='idUStudent']").val();
+    // var idSkill        = $("select[name='idSkill']").val();
     var currentDate    = $("input[name='currentDate']").val();
     var revokedDate    = $("input[name='revokedDate']").val();
     var masteryLevel   = $("select[name='masteryLevel']").val();
 
     sendAjax("ajaxAddCompetence.php", {
-      idUTeacher: idUTeacher,
-      idUStudent: idUStudent,
-      idSkill: idSkill,
+      // idUTeacher: idUTeacher,
+      // idUStudent: idUStudent,
+      // idSkill: idSkill,
       currentDate: currentDate,
       revokedDate: revokedDate,
       masteryLevel: masteryLevel
