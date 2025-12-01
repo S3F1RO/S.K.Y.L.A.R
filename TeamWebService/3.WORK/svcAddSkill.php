@@ -25,17 +25,17 @@ header("Content-Type: application/json; charset=UTF-8");
   
 
   // Check
-  if ($idUCreator == NULL || $mainName == NULL || $subName == NULL) {
+  if ($idUCreator == NULL || $mainName == NULL || $subName == NULL || $domain == NULL || $level == NULL || $imgUrl == NULL || $color == NULL) {
     echo json_encode([null]);
     exit;
   }
   
   
-  $idUser = DataStorage::addUser($firstName, $lastName);
+  $idUser = DataStorage::addUser($idUCreator, $mainName, $subName, $domain, $level, $imgUrl, $color);
   
   // Exemple de traitement
   $response = [
-    "id" => $idUser
+    "id" => $idSkill
   ];
   
   // Renvoyer une réponse JSON
