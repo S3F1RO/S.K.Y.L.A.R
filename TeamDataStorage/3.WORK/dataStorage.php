@@ -49,15 +49,15 @@ class DataStorage {
         // DB close
     }
 
-
-        static function addCompetence(string $idUTeacher, string $idUStudent, string $idSkill, string $currentDate, string $revokedDate, int $masteryLevel) {
+        #Il faut récup la currenDate
+        static function addCompetence(string $idUTeacher, string $idUStudent, string $idSkill, string $revokedDate, int $masteryLevel) {
         // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
 
         // DB insert
-        $query = "INSERT INTO tblCompetences (id ,idUTeacher, idUStudent, idSkill, currentDate, revokedDate, masteryLevel) VALUES (NULL , '$idUTeacher', '$idUStudent', '$idSkill', '$currentDate', '$revokedDate', '$masteryLevel');";
+        $query = "INSERT INTO tblCompetences (id ,idUTeacher, idUStudent, idSkill, currentDate, revokedDate, masteryLevel) VALUES (NULL , '$idUTeacher', '$idUStudent', '$idSkill', NOW, '$revokedDate', '$masteryLevel');";
         $success = $db->query($query);
 
         // Check
