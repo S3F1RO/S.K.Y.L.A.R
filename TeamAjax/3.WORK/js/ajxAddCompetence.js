@@ -1,19 +1,23 @@
 $(document).ready(function () {
 
-    $("#btnOK").click(function () {
+  $("#btnOK").click(function () {
 
-        var currentDate    = $("input[name='currentDate']").val();
-        var revokedDate    = $("input[name='revokedDate']").val();
-        var masteryLevel = $("select[name='masteryLevel']").val();
+    var idUTeacher     = $("select[name='idUTeacher']").val();
+    var idUStudent     = $("select[name='idUStudent']").val();
+    var idSkill        = $("select[name='idSkill']").val();
+    var currentDate    = $("input[name='currentDate']").val();
+    var revokedDate    = $("input[name='revokedDate']").val();
+    var masteryLevel   = $("select[name='masteryLevel']").val();
 
-
-
-
-    sendAjax("ajaxAddUser.php", {
-     currentDate: currentDate,
+    sendAjax("ajaxAddCompetence.php", {
+      idUTeacher: idUTeacher,
+      idUStudent: idUStudent,
+      idSkill: idSkill,
+      currentDate: currentDate,
       revokedDate: revokedDate,
       masteryLevel: masteryLevel
     });
+
   });
 
 /*==============================================================================
@@ -26,25 +30,30 @@ function redirect(serverUrl) {
 function receiveAjax(data) {
 
   if (data['success']) {
-  
-   jQuery("body").html(
+
+    jQuery("body").html(
       "Bravo ! La compétence a été ajoutée avec succès.<br>" +
-      "L'étudiant a maintenant une nouvelle compétence validée !"
+      "L'étudiant a maintenant une nouvelle compétence validée !<br>" +
+      "ID compétence : " + data['id']
     );
 
   } else {
-    // redirect("logout.php");
+    jQuery("body").html("Erreur : " + data['message']);
   }
 }
 
 // --- Send AJAX data to server
 function sendAjax(serverUrl, data) {
   jsonData = JSON.stringify(data);
-    jQuery.ajax({type: 'POST', url: serverUrl, dataType: 'json', data: "data=" + jsonData,
-      success: function(data) {
-        receiveAjax(data);
-      }
-    });
-  }
-  
+  jQuery.ajax({
+    type: 'POST',
+    url: serverUrl,
+    dataType: 'json',
+    data: "data=" + jsonData,
+    success: function(data) {
+      receiveAjax(data);
+    }
+  });
+}
+
 });

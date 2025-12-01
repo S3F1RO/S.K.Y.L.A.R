@@ -10,24 +10,30 @@ if (!isset($_POST['data'])) {
   exit();
 }
 
-// Décoder JSON
+// Décoder JSON reçu depuis sendAjax()
 $data = json_decode($_POST['data'], true);
 
-// Récupération des champs
+// Récupération des champs envoyés par le JS
+$idUTeacher     = $data["idUTeacher"]     ?? "";
+$idUStudent     = $data["idUStudent"]     ?? "";
+$idSkill        = $data["idSkill"]        ?? "";
 $currentDate    = $data["currentDate"]    ?? "";
 $revokedDate    = $data["revokedDate"]    ?? "";
-$masteryLevel = $data["masteringLevel"] ?? "";
+$masteryLevel   = $data["masteryLevel"]   ?? "";
 
-// Appel vers le webservice serveur
+// Envoi vers le webservice serveur
 $response = sendAjax(
   "http://localhost/SAE32/TeamAjax/3.WORK/svcAddCompetence.php",
   [
-    "currentDate"    => $currentDate,
-    "revokedDate"    => $revokedDate,
+    "idUTeacher"   => $idUTeacher,
+    "idUStudent"   => $idUStudent,
+    "idSkill"      => $idSkill,
+    "currentDate"  => $currentDate,
+    "revokedDate"  => $revokedDate,
     "masteryLevel" => $masteryLevel
   ]
 );
 
-// renvoyer au JS
+// Retour au JS
 echo json_encode($response);
 ?>
