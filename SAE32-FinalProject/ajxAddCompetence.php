@@ -14,9 +14,9 @@ if (!isset($_POST['data'])) {
 $data = json_decode($_POST['data'], true);
 
 // Récupération des champs envoyés par le JS
-// $idUTeacher     = $data["idUTeacher"]     ?? "";
-// $idUStudent     = $data["idUStudent"]     ?? "";
-// $idSkill        = $data["idSkill"]        ?? "";
+$idUTeacher     = $data["idUTeacher"]     ?? "";
+$idUStudent     = $data["idUStudent"]     ?? "";
+$idSkill        = $data["idSkill"]        ?? "";
 $currentDate    = $data["currentDate"]    ?? "";
 $revokedDate    = $data["revokedDate"]    ?? "";
 $masteryLevel   = $data["masteryLevel"]   ?? "";
@@ -25,9 +25,9 @@ $masteryLevel   = $data["masteryLevel"]   ?? "";
 $response = sendAjax(
   "http://localhost/SAE32/TeamAjax/3.WORK/svcAddCompetence.php",
   [
-    // "idUTeacher"   => $idUTeacher,
-    // "idUStudent"   => $idUStudent,
-    // "idSkill"      => $idSkill,
+    "idUTeacher"   => $idUTeacher,
+    "idUStudent"   => $idUStudent,
+    "idSkill"      => $idSkill,
     "currentDate"  => $currentDate,
     "revokedDate"  => $revokedDate,
     "masteryLevel" => $masteryLevel
