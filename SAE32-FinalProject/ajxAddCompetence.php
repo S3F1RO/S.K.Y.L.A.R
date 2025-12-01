@@ -23,7 +23,7 @@ $masteryLevel   = $data["masteryLevel"]   ?? "";
 
 // Envoi vers le webservice serveur
 $response = sendAjax(
-  "http://localhost/SAE32/TeamAjax/3.WORK/svcAddCompetence.php",
+  "http://localhost/SAE32-FinalProject/svcAddCompetence.php",
   [
     "idUTeacher"   => $idUTeacher,
     "idUStudent"   => $idUStudent,
