@@ -9,10 +9,14 @@
 
 /* Body & Wrapper */
 .wrapper {
-	min-height: 100vh;
-	max-width: 1200px;
+	min-height: 100px;
 	margin: 0 auto 0 auto;
-	padding: 1px;
+  background-color: #cddadd;
+  max-width: 700px;
+  width: 100%;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   
 }
 
@@ -38,14 +42,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.wrapper {
-  background-color: #cddadd;
-  max-width: 700px;
-  width: 100%;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
   /* Titles */
