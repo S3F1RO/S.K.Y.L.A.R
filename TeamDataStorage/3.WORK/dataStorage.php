@@ -187,6 +187,37 @@ class DataStorage {
         return $data;
         // DB close
     }
+
+    static getSkillCreator($idSkill){
+        // DB open
+        include_once("./cfgDb.php");
+        $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
+        $db->set_charset("utf8");
+        
+        // DB select
+        $query = "SELECT idUSer FROM tbl WHERE id = '$idCompetence';";
+        $result = $db->query($query);
+        $numRows = $result->num_rows;
+
+        // Check
+        if ($numRows == 0) {
+            header("Location: logout.php");
+            exit();
+        }
+
+        // Data from DB
+        while ($row = $result->fetch_assoc()) {
+            $data['idUteacher'] = $row['idUTeacher'];
+            $data['idUStudent'] = $row['idUStudent'];
+            $data['idSkill'] = $row['idSkill'];
+            $data['currentDate'] = $row['currentDate'];
+            $data['revokedDate'] = $row['revokedDate'];
+            $data['masteringLevel'] = $row['masteringLevel'];
+        }
+        $result->close();
+        return $data;
+        // DB close
+    }
 }
 
 // $idSkill = DataStorage::addSkill(36, "macabou", "le poto", "RT2", 1, "", "ffffff");
