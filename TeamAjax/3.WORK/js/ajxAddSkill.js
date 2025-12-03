@@ -1,62 +1,47 @@
 $(document).ready(function(){
-//==============================================================================
 
-/*==============================================================================
-  Send ajax to server
-==============================================================================*/
+  $("#btnOK").on("click", function() {
 
-  // On page load
+    var data = {
+      mainName: $("input[name='mainName']").val(),
+      subName:  $("input[name='subName']").val(),
+      domain:   $("input[name='domain']").val(),
+      level:    $("input[name='level']").val(),
+      color:    $("input[name='color']").val().replace(/^#/, ''),
+      idUCreator: $("input[name='idUCreator']").val()
+    };
 
-  // On click OK button
-  jQuery("body").on("click", "#btnOK", function() {
+    console.log("Envoi AJAX :", data);
 
-    var mainName = jQuery("input[name='mainName']").val();
-    var subName  = jQuery("input[name='subName']").val();
-    var domain  = jQuery("input[name='domain']").val();
-    var level  = jQuery("input[name='number']").val();
-    var color  = jQuery("input[name='color']").val();
-
-    sendAjax("ajxAddSkill.php", {
-      mainName: mainName,
-      subName: subName,
-      domain:domain,
-      level:level,
-      color:color,
-    });
+    sendAjax("ajxAddSkill.php", data);
   });
 
-/*==============================================================================
-  Receive ajax
-==============================================================================*/
-function redirect(serverUrl) {
-  window.location.href = serverUrl;
-}
+  function receiveAjax(response) {
+    console.log("Réponse serveur :", response);
 
-function receiveAjax(data) {
-
-  if (data['success']) {
-
-    var id = data["id"];           // récupère l'id
-    var nickname = data["nickname"]; // récupère le nickname
-
-    jQuery("body").html(
-      "ID utilisateur reçu : " + id +
-      "Nickname reçu : " + nickname
+    $("#debug").html(
+      "<h3>Réponse serveur</h3><pre>" +
+      JSON.stringify(response, null, 2) +
+      "</pre>"
     );
-
-  } else {
-    // redirect("logout.php");
   }
-}
 
-// --- Send AJAX data to server
-function sendAjax(serverUrl, data) {
-  jsonData = JSON.stringify(data);
-    jQuery.ajax({type: 'POST', url: serverUrl, dataType: 'json', data: "data=" + jsonData,
-      success: function(data) {
-        receiveAjax(data);
+  function sendAjax(serverUrl, data) {
+    $.ajax({
+      type: "POST",
+      url: serverUrl,
+      dataType: "json",
+      data: { data: JSON.stringify(data) },
+      success: function(res) {
+        receiveAjax(res);
+      },
+      error: function(err) {
+        console.log("Erreur AJAX :", err);
+        $("#debug").html("<p style='color:red;'>Erreur AJAX</p>");
       }
     });
   }
-  
+
 });
+
+
