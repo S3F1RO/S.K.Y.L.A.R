@@ -1,64 +1,63 @@
 $(document).ready(function () {
 
+<<<<<<< HEAD
     $("#btnOk").click(function () {
+=======
+  $("#btnOK").click(function () {
+>>>>>>> 780a48325fe3dd51fbf0e49766b57643e8129ff5
 
-        var idUTeacher     = $("select[name='idUTeacher']").val();
-        var idUStudent     = $("select[name='idUStudent']").val();
-        var idSkill        = $("select[name='idSkill']").val();
-        var masteringLevel = $("input[name='masteringLevel']").val();
-        var currentDate    = $("input[name='currentDate']").val();
+    var idUTeacher     = $("select[name='idUTeacher']").val();
+    var idUStudent     = $("select[name='idUStudent']").val();
+    var idSkill        = $("select[name='idSkill']").val();
+    var currentDate    = $("input[name='currentDate']").val();
+    var revokedDate    = $("input[name='revokedDate']").val();
+    var masteryLevel   = $("select[name='masteryLevel']").val();
 
-        var dataToSend = {
-            idUTeacher: idUTeacher,
-            idUStudent: idUStudent,
-            idSkill: idSkill,
-            masteringLevel: masteringLevel,
-            currentDate: currentDate
-        };
-
-        sendAjax("ajaxAddCompetence.php", dataToSend);
+    sendAjax("ajaxAddCompetence.php", {
+      idUTeacher: idUTeacher,
+      idUStudent: idUStudent,
+      idSkill: idSkill,
+      currentDate: currentDate,
+      revokedDate: revokedDate,
+      masteryLevel: masteryLevel
     });
 
+  });
 
-    function sendAjax(serverUrl, data) {
+/*==============================================================================
+  Receive ajax
+==============================================================================*/
+function redirect(serverUrl) {
+  window.location.href = serverUrl;
+}
 
-        var jsonData = JSON.stringify(data);
+function receiveAjax(data) {
 
-        $.ajax({
-            type: 'POST',
-            url: serverUrl,
-            dataType: 'json',
-            data: "data=" + jsonData,
+  if (data['success']) {
 
-            success: function (response) {
-                receiveAjax(response);
-            },
+    jQuery("body").html(
+      "Bravo ! La compétence a été ajoutée avec succès.<br>" +
+      "L'étudiant a maintenant une nouvelle compétence validée !<br>" +
+      "ID compétence : " + data['id']
+    );
 
-            error: function (xhr, status, error) {
-                console.log("Erreur AJAX :", error);
-                $("body").html("<span style='color:red;'>Erreur AJAX</span>");
-            }
-        });
+  } else {
+    jQuery("body").html("Erreur : " + data['message']);
+  }
+}
+
+// --- Send AJAX data to server
+function sendAjax(serverUrl, data) {
+  jsonData = JSON.stringify(data);
+  jQuery.ajax({
+    type: 'POST',
+    url: serverUrl,
+    dataType: 'json',
+    data: "data=" + jsonData,
+    success: function(data) {
+      receiveAjax(data);
     }
-
-
-    function receiveAjax(data) {
-
-        console.log("Réponse Serveur:", data);
-
-        if (data.success === true) {
-
-            $("body").html(
-                "<b>Compétence ajoutée !</b><br>" +
-                "ID compétence : " + data.id
-            );
-
-        } else {
-
-            $("body").html(
-                "<span style='color:red;'>Erreur : " + data.message + "</span>"
-            );
-        }
-    }
+  });
+}
 
 });
