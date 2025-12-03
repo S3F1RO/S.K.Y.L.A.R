@@ -33,7 +33,44 @@ $idUStudent     = $data["idUStudent"];
 $idSkill        = $data["idSkill"];
 $currentDate    = $data["currentDate"];
 $revokedDate    = $data["revokedDate"] ;
-$masteringLevel = $data["masteringLevel"]; // ⚠ bien "masteringLevel"
+$masteringLevel = $data["masteringLevel"]; 
+
+
+
+// =========================
+//   FILTRES 
+// =========================
+
+// idUTeacher : chiffres uniquement
+// if (!preg_match("/^[0-9]+$/", $idUTeacher)) {
+//     echo json_encode(["success" => false, "message" => "idUTeacher invalide"]);
+//     exit();
+// }
+
+// // idUStudent : chiffres uniquement
+// if (!preg_match("/^[0-9]+$/", $idUStudent)) {
+//     echo json_encode(["success" => false, "message" => "idUStudent invalide"]);
+//     exit();
+// }
+
+// // idSkill : chiffres uniquement
+// if (!preg_match("/^[0-9]+$/", $idSkill)) {
+//     echo json_encode(["success" => false, "message" => "idSkill invalide"]);
+//     exit();
+// }
+
+// // revokedDate : max 100 caractères
+// if (!preg_match("/^.{0,100}$/", $revokedDate)) {
+//     echo json_encode(["success" => false, "message" => "revokedDate invalide"]);
+//     exit();
+// }
+
+// // masteringLevel : chiffres uniquement
+// if (!preg_match("/^[0-9]+$/", $masteringLevel)) {
+//     echo json_encode(["success" => false, "message" => "masteringLevel invalide"]);
+//     exit();
+// }
+
 
 // ----- Envoi au WebService -----
 $response = sendAjax(

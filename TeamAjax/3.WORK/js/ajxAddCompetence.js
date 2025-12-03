@@ -12,16 +12,63 @@ $(document).ready(function() {
       idSkill:        $("input[name='idSkill']").val(),
       currentDate:    $("input[name='currentDate']").val(),
       revokedDate:    $("input[name='revokedDate']").val(),
-      masteringLevel: $("select[name='masteringLevel']").val()   // ⚠ même nom que dans le PHP
+      masteringLevel: $("select[name='masteringLevel']").val()   
     };
 
     console.log("Données saisies :", data);
 
+        // ==========================
+    //  FILTRES  DATA
+    // ==========================
+
+    // // idUTeacher : chiffres uniquement
+    // if (!/^[0-9]+$/.test(data.idUTeacher)) {
+    //   alert("idUTeacher invalide (uniquement des chiffres)");
+    //   return;
+    // }
+
+    // // idUStudent : chiffres uniquement
+    // if (!/^[0-9]+$/.test(data.idUStudent)) {
+    //   alert("idUStudent invalide (uniquement des chiffres)");
+    //   return;
+    // }
+
+    // // idSkill : chiffres uniquement
+    // if (!/^[0-9]+$/.test(data.idSkill)) {
+    //   alert("idSkill invalide (uniquement des chiffres)");
+    //   return;
+    // }
+
+    // // revokedDate : max 100 caractères
+    // if (!/^.{0,100}$/.test(data.revokedDate)) {
+    //   alert("revokedDate invalide (100 caractères max)");
+    //   return;
+    // }
+
+    // // masteringLevel : chiffres uniquement
+    // if (!/^[0-9]+$/.test(data.masteringLevel)) {
+    //   alert("masteringLevel invalide (uniquement des chiffres)");
+    //   return;
+    // }
+
+
+    
     // Affichage brut pour debug
     $("#result").html(
       "<h2>Valeurs récupérées par le JS :</h2>" +
       "<pre>" + JSON.stringify(data, null, 2) + "</pre>"
     );
+
+
+
+
+
+
+
+
+
+
+
 
     // Envoi au PHP AJAX
     sendAjax("ajxAddCompetence.php", data);
