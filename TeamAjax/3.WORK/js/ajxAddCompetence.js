@@ -59,17 +59,6 @@ $(document).ready(function() {
       "<pre>" + JSON.stringify(data, null, 2) + "</pre>"
     );
 
-
-
-
-
-
-
-
-
-
-
-
     // Envoi au PHP AJAX
     sendAjax("ajxAddCompetence.php", data);
   });
