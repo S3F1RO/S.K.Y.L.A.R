@@ -109,8 +109,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         $data = [];
@@ -139,8 +138,7 @@ class DataStorage {
         
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
@@ -172,8 +170,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
@@ -206,8 +203,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
@@ -222,7 +218,7 @@ class DataStorage {
     }
     // GET Competence skills infos from idCompetence
     static function getCompetenceSkill($idCompetence){
-         // DB open
+        // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
@@ -238,8 +234,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
@@ -258,7 +253,7 @@ class DataStorage {
     }
     
     static function getCompetenceTeacher($idCompetence){
-         // DB open
+        // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
@@ -274,8 +269,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
@@ -290,7 +284,7 @@ class DataStorage {
     }
 
     static function getCompetenceStudent($idCompetence){
-         // DB open
+        // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
@@ -306,8 +300,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
@@ -322,7 +315,7 @@ class DataStorage {
     }
 
     static function getCompetenceCreator($idCompetence){
-         // DB open
+        // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
@@ -339,8 +332,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
@@ -355,7 +347,7 @@ class DataStorage {
     }
 
     static function getStudentCompetences($idStudent){
-         // DB open
+        // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
@@ -371,8 +363,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB

@@ -17,7 +17,7 @@ if (isset($data["idCompetence"])) {
 }
 
 // Vérif
-if ($idCompetence === null) {
+if ($idCompetence === null|| $idCompetence==='') {
     echo json_encode([
         "success" => false,
         "message" => "ID compétence manquant"
