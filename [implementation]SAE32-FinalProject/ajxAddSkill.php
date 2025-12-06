@@ -1,11 +1,26 @@
 <?php
 include_once('./utils.php');
+include_once('./params.php');
+
+  // Data from session
+  session_start();
+  $idUser = NULL;
+  if (isset($_SESSION['idUser'])) $idUser = $_SESSION['idUser'];
+
+  // Check
+  if ($idUser == NULL) {
+    echo json_encode([
+      "success" => false,
+      "message" => "Pas de session"
+    ]);
+    exit();
+  }
 
 // Vérifier si les données arrivent bien
 if (!isset($_POST['data'])) {
     echo json_encode([
-        "success" => false,
-        "message" => "Aucune donnée reçue"
+      "success" => false,
+      "message" => "Aucune donnée reçue"
     ]);
     exit();
 }
@@ -15,7 +30,6 @@ $data = json_decode($_POST['data'], true);
 
 // Vérifier que toutes les données attendues existent
 if (!isset($data["mainName"]) ||
-    !isset($data["subName"])  ||
     !isset($data["domain"])   ||
     !isset($data["level"])    ||
     !isset($data["color"])) 
@@ -33,12 +47,11 @@ $domain     = $data["domain"];
 $level      = $data["level"];
 $color      = $data["color"];
 
-
 // ----- Envoi au WebService -----
 $response = sendAjax(
-    "http://localhost/SAE32/[implementation]SAE32-FinalProject/svcAddSkill.php",
+    $URL . "svcAddSkill.php",
     [
-        "idUCreator" => 1,
+        "idUCreator" => $idUser,
         "mainName"   => $mainName,
         "subName"    => $subName,
         "domain"     => $domain,

@@ -1,6 +1,6 @@
 <?php
 
   // utils parameters
-  $URL="http://localhost/SAE32/[implementation]SAE32-FinalProject/";
+  $URL="http://localhost/gitSAE32/[implementation]SAE32-FinalProject/";
 
 ?>

@@ -1,6 +1,7 @@
 <?php
 
   include_once('./utils.php');
+  include_once('./params.php');
   
   // Data from session
   session_start();
@@ -33,7 +34,8 @@
   $data = ["idSkill" => $idSkill, "idUTeacher" => $idUTeacher, "idUStudent" => $idUStudent, "revokedDate" => $revokedDate, "masteringLevel" => $masteringLevel];
 
   // ----- Envoi au WebService -----
-  $response = sendAjax("http://localhost/gitSAE32/[implementation]SAE32-FinalProject/svcAddCompetence.php", $data);
+
+  $response = sendAjax($URL . "svcAddCompetence.php", $data);
 
   // Debug si besoin :
   // echo json_encode(["success" => false, "debug" => $response['id']]);
