@@ -1,6 +1,6 @@
 <?php
 
   // utils parameters
-  $URL="http://localhost/gitSAE32/[implementation]SAE32-FinalProject/badgeWebService/";
+  $URL="http://localhost/gitSAE32/working-v1.2/badgeWebService/";
 
 ?>

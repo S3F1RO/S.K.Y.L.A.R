@@ -8,17 +8,30 @@ $(document).ready(function(){
   // On page load
 
   // On click OK button
-  jQuery("body").on("click", "#btnOK", function() {
-
+  jQuery("body").on("click", ".ok", function() {
     var firstName = jQuery("input[name='firstName']").val();
     var lastName  = jQuery("input[name='lastName']").val();
     var nickname  = jQuery("input[name='nickname']").val();
 
     sendAjax("ajaxAddUser.php", {
-      firstName: firstName,
-      lastName: lastName,
-      nickname: nickname
+      'firstName': firstName,
+      'lastName': lastName,
+      'nickname': nickname
     });
+  });
+
+  jQuery("body").on("keyup", "input[name='nickname']", function(key) {
+    if (key.which == 13) {
+      var firstName = jQuery("input[name='firstName']").val();
+      var lastName  = jQuery("input[name='lastName']").val();
+      var nickname  = jQuery("input[name='nickname']").val();
+
+      sendAjax("ajaxAddUser.php", {
+        'firstName': firstName,
+        'lastName': lastName,
+        'nickname': nickname
+      });
+    }
   });
 
 /*==============================================================================
