@@ -16,14 +16,12 @@ $(document).ready(function(){
     sendAjax("ajxAddSkill.php", data);
   });
 
-  function receiveAjax(response) {
-    console.log("Réponse serveur :", response);
-
-    $("#debug").html(
-      "<h3>Réponse serveur</h3><pre>" +
-      JSON.stringify(response, null, 2) +
-      "</pre>"
-    );
+  function receiveAjax(data) {
+    if (data["success"]) {
+      alert(data["id"])
+    } else {
+      jQuery("p").html(data["html"]);
+    }
   }
 
   function sendAjax(serverUrl, data) {

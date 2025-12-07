@@ -2,6 +2,7 @@
 include_once('./utils.php');
 include_once('./params.php');
 
+  $html = "<span>Information(s) invalide(s) ou manquante(s)</span>";
   // Data from session
   session_start();
   $idUser = NULL;
@@ -11,7 +12,7 @@ include_once('./params.php');
   if ($idUser == NULL) {
     echo json_encode([
       "success" => false,
-      "message" => "Pas de session"
+      "html" => $html
     ]);
     exit();
   }
@@ -20,7 +21,7 @@ include_once('./params.php');
 if (!isset($_POST['data'])) {
     echo json_encode([
       "success" => false,
-      "message" => "Aucune donnée reçue"
+      "html" => $html
     ]);
     exit();
 }
@@ -36,7 +37,7 @@ if (!isset($data["mainName"]) ||
 {
     echo json_encode([
         "success" => false,
-        "message" => "Données manquantes"
+        "html" => $html
     ]);
     exit();
 }
@@ -60,16 +61,11 @@ $response = sendAjax(
     ]
 );
 
-// Debug : pour tester facilement
-// echo json_encode(["debug" => $response]);
-// exit();
-
 // Vérifier la réponse du serveur
 if (!isset($response["id"])) {
     echo json_encode([
         "success" => false,
-        "message" => "Réponse serveur invalide",
-        "serverResponse" => $response
+        "html" => $html
     ]);
     exit();
 }

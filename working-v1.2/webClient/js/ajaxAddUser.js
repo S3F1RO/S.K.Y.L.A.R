@@ -47,7 +47,8 @@ function receiveAjax(data) {
     var id = data["id"];
     jQuery("body").html("ID utilisateur reçu : " + id);
   } else {
-    // redirect("logout.php");/
+    var html = data["html"];
+    jQuery("p").html(html);
   }
 };
 

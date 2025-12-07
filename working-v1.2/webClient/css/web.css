@@ -100,7 +100,9 @@ button:hover,
 }
 
 
-
+span {
+  color: red;
+}
 
 /*==============================
 	Classes

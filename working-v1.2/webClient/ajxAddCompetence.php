@@ -14,6 +14,7 @@
     exit();
   }
 
+  $html = "<span>Information(s) incorrecte(s)</span>";
 
   if (isset($_POST['data'])) $data = json_decode($_POST['data'], true);
   $idSkill = NULL;
@@ -27,24 +28,20 @@
 
   // Check
   if ($idUStudent == NULL || $masteringLevel == NULL || $idSkill == NULL) {
-    echo json_encode(["success"=>false, 'debug'=>"something null"]);
+    echo json_encode(["success"=>false, 'html'=>$html]);
     exit();
   }
   
   $data = ["idSkill" => $idSkill, "idUTeacher" => $idUTeacher, "idUStudent" => $idUStudent, "revokedDate" => $revokedDate, "masteringLevel" => $masteringLevel];
 
   // ----- Envoi au WebService -----
-  // debug();
   $response = sendAjax($URL . "svcAddCompetence.php", $data);
-
-  // Debug si besoin :
-  // echo json_encode(["success" => false, "debug" => $response['id']]);
-  // exit();
 
   // Vérifier la réponse du serveur
   if ($response["id"] == NULL) {
     echo json_encode([
       "success" => false,
+      'html'=>$html
     ]);
     exit();
   }

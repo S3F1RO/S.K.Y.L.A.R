@@ -44,7 +44,7 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0,  shrink-to-fit=no"> -->
 
     <!-- Icon -->
-    <link rel='icon' type='image/png' href='./medias/iut.png' />
+    <link rel='icon' type='image/png' href='./medias/RTSAE.png'/>
 
     <!-- Title -->
     <title>Compétence</title>
@@ -58,8 +58,7 @@
       <h1>Ajout Compétence</h1>
 
       <!-- Champ des utilisateurs-->
-     <ul>
-     </ul>
+     <p></p>
      
       <article>
         <ul>
