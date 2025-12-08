@@ -101,6 +101,13 @@
       return null;
     }
   }
+
+  function escape_string($str) {
+    $search  = ["\\",   "\x00", "\n",  "\r",  "'",   '"',  "\x1a"];
+    $replace = ["\\\\", "\\0",  "\\n", "\\r", "\\'", '\\"', "\\Z"];
+    return str_replace($search, $replace, $str);
+  }
+  
   function debug($debugItem) {
     echo json_encode(["debug"=>"fonctionnel","requiredItem"=>$debugItem]);
     exit();

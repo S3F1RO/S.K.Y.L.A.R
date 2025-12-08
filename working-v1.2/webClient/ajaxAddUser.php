@@ -2,22 +2,27 @@
 include_once('./utils.php');
 include_once('./params.php');
 
-// Vérifier si on a reçu des données
+// Default error message
+$html = "<span>Prénom, nom ou pseudo invalide</span>";
+
+// Check if data has been received
 if (!isset($_POST['data'])) {
     echo json_encode([
         "success" => false,
-        "message" => "Aucune donnée reçue"
+        "html" => $html
     ]);
     exit();
 }
 
-// Décoder les données JSON envoyées
+// Decode the sent JSON data
 $data = json_decode($_POST['data'], true);
 
-// Initialiser les variables
+// Initialize variables
 $firstName = NULL;
 $lastName  = NULL;
+$nickname = NULL;
 
+// Retrieving values
 if (isset($data['firstName'])) {
     $firstName = $data['firstName'];
 }
@@ -27,8 +32,17 @@ if (isset($data['lastName'])) {
 if (isset($data['nickname'])) {
     $nickname = $data['nickname'];
 }
-// Réponse AJAX envoyée au JavaScript
+
+// Check validity
+if ($firstName == NULL || $lastName == NULL || $nickname == NULL) {
+    fail(NULL, NULL, $html);
+}
+
+// AJAX response sent to JavaScript
 $data = sendAjax($URL . "svcAddUser.php", ["firstName" => $firstName, "lastName"  => $lastName, "nickname" => $nickname]);
-echo json_encode(["success" => true, "id" => $data["id"]]);
+
+// Everything went well → SUCCESS
+success(NULL, NULL, NULL, NULL, ["id" => $response["id"]]);
+
 
 ?>

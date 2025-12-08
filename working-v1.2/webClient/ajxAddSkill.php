@@ -2,6 +2,7 @@
 include_once('./utils.php');
 include_once('./params.php');
 
+  $html = "<span>Information(s) invalide(s) ou manquante(s)</span>";
   // Data from session
   session_start();
   $idUser = NULL;
@@ -11,24 +12,24 @@ include_once('./params.php');
   if ($idUser == NULL) {
     echo json_encode([
       "success" => false,
-      "message" => "Pas de session"
+      "html" => $html
     ]);
     exit();
   }
 
-// Vérifier si les données arrivent bien
+// Check if the data is arriving correctly
 if (!isset($_POST['data'])) {
     echo json_encode([
       "success" => false,
-      "message" => "Aucune donnée reçue"
+      "html" => $html
     ]);
     exit();
 }
 
-// Décoder les données envoyées par le JS
+// Decode the data sent by the JS
 $data = json_decode($_POST['data'], true);
 
-// Vérifier que toutes les données attendues existent
+// Verify that all expected data exists
 if (!isset($data["mainName"]) ||
     !isset($data["domain"])   ||
     !isset($data["level"])    ||
@@ -36,18 +37,18 @@ if (!isset($data["mainName"]) ||
 {
     echo json_encode([
         "success" => false,
-        "message" => "Données manquantes"
+        "html" => $html
     ]);
     exit();
 }
-// Récupération des valeurs en toute sécurité
+// Secure value retrieval
 $mainName   = $data["mainName"];
 $subName    = $data["subName"];
 $domain     = $data["domain"];
 $level      = $data["level"];
 $color      = $data["color"];
 
-// ----- Envoi au WebService -----
+// ----- Send to WebService -----
 $response = sendAjax(
     $URL . "svcAddSkill.php",
     [
@@ -60,24 +61,12 @@ $response = sendAjax(
     ]
 );
 
-// Debug : pour tester facilement
-// echo json_encode(["debug" => $response]);
-// exit();
-
-// Vérifier la réponse du serveur
+// Check the server response
 if (!isset($response["id"])) {
-    echo json_encode([
-        "success" => false,
-        "message" => "Réponse serveur invalide",
-        "serverResponse" => $response
-    ]);
-    exit();
+  fail(NULL, NULL, $html);
 }
 
-// Réponse finale pour le JS
-echo json_encode([
-    "success" => true,
-    "id"      => $response["id"]
-]);
-exit();
+// Final response for JS
+success(NULL, NULL, NULL, NULL, ["id" => $response["id"]]);
+
 ?>

@@ -36,7 +36,7 @@ $(document).ready(function() {
       alert("Compétence créée id : " + data['id'])
       // redirect("getCompetences.php?data['id']")
     } else {
-      alert("id == NULL");
+      jQuery("p").html(data["html"]);
     }
   }
 
