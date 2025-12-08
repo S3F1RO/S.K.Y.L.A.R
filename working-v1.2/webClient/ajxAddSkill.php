@@ -17,7 +17,7 @@ include_once('./params.php');
     exit();
   }
 
-// Vérifier si les données arrivent bien
+// Check if the data is arriving correctly
 if (!isset($_POST['data'])) {
     echo json_encode([
       "success" => false,
@@ -26,10 +26,10 @@ if (!isset($_POST['data'])) {
     exit();
 }
 
-// Décoder les données envoyées par le JS
+// Decode the data sent by the JS
 $data = json_decode($_POST['data'], true);
 
-// Vérifier que toutes les données attendues existent
+// Verify that all expected data exists
 if (!isset($data["mainName"]) ||
     !isset($data["domain"])   ||
     !isset($data["level"])    ||
@@ -41,14 +41,14 @@ if (!isset($data["mainName"]) ||
     ]);
     exit();
 }
-// Récupération des valeurs en toute sécurité
+// Secure value retrieval
 $mainName   = $data["mainName"];
 $subName    = $data["subName"];
 $domain     = $data["domain"];
 $level      = $data["level"];
 $color      = $data["color"];
 
-// ----- Envoi au WebService -----
+// ----- Send to WebService -----
 $response = sendAjax(
     $URL . "svcAddSkill.php",
     [
@@ -61,19 +61,12 @@ $response = sendAjax(
     ]
 );
 
-// Vérifier la réponse du serveur
+// Check the server response
 if (!isset($response["id"])) {
-    echo json_encode([
-        "success" => false,
-        "html" => $html
-    ]);
-    exit();
+  fail(NULL, NULL, $html);
 }
 
-// Réponse finale pour le JS
-echo json_encode([
-    "success" => true,
-    "id"      => $response["id"]
-]);
-exit();
+// Final response for JS
+success(NULL, NULL, NULL, NULL, ["id" => $response["id"]]);
+
 ?>

@@ -34,23 +34,14 @@
   
   $data = ["idSkill" => $idSkill, "idUTeacher" => $idUTeacher, "idUStudent" => $idUStudent, "revokedDate" => $revokedDate, "masteringLevel" => $masteringLevel];
 
-  // ----- Envoi au WebService -----
+    // ----- Send to WebService -----
   $response = sendAjax($URL . "svcAddCompetence.php", $data);
 
-  // Vérifier la réponse du serveur
-  if ($response["id"] == NULL) {
-    echo json_encode([
-      "success" => false,
-      'html'=>$html
-    ]);
-    exit();
-  }
+   // Check the server response
+if (!isset($response["id"]) || $response["id"] == NULL) {
+  fail(NULL, NULL, $html);
+}
 
-  // Réponse finale pour le JS
-  echo json_encode([
-    "success" => true,
-    "id"      => $response["id"]
-  ]);
-  exit();
-
+  // Final response for JS
+ success(NULL, NULL, NULL, NULL, ["id" => $response["id"]]);
 ?>
