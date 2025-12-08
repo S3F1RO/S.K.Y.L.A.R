@@ -12,15 +12,15 @@ if (!isset($_POST['data'])) {
 
 $data = json_decode($_POST['data'], true);
 /////////////////////////////////
-if (isset($data["idTeacher"])) {
-    $idTeacher= $data["idTeacher"];
+if (isset($data["idStudent"])) {
+    $idStudent= $data["idStudent"];
 }
 
 // Vérif
-if ($idTeacher=== null|| $idTeacher==='') {
+if ($idStudent=== null|| $idStudent==='') {
     echo json_encode([
         "success" => false,
-        "message" => "ID compétence manquant"
+        "message" => "ID student manquant"
     ]);
     exit();
 }
@@ -28,6 +28,6 @@ if ($idTeacher=== null|| $idTeacher==='') {
 // redirec
 echo json_encode([
     "success" => true,
-    "url" => "getCompetences.php?idTeacher=" . $idTeacher
+    "url" => "getCompetences.php?idS=" . $idStudent
 ]);
 
