@@ -1,6 +1,6 @@
 <?php
 include_once('./utils.php');
-include_once('dataStorage.php');
+include_once('./dataStorage.php');
 
 // DB open
   include_once("./cfgDbEscape.php");
@@ -20,11 +20,11 @@ header("Content-Type: application/json; charset=UTF-8");
     echo json_encode(["success" => false, "message" => "Aucune donnée reçue"]);
     exit;
   }
-
+  
   // DB close
   $db->close();
   
-  $responce = DataStorage::getFullSkill($idSkill);
+  $responce = DataStorage::getSkillCompetences($idSkill);
   
   // Send back a JSON response
   echo json_encode($responce);

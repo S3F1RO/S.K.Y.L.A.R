@@ -20,18 +20,23 @@
   }
 
   //array to stock competences 
-  $competences=[];
+  $idC = [];
   // Loop through each competence ID
   foreach ($idCompetences as $idCompetence) {
-
+    
     // filtered + escaped data
     if (preg_match("/^[0-9]+$/", $idCompetence)) $idCompetence = $db->real_escape_string($idCompetence);
-    // Get competence data
-    $competence = DataStorage::getFullCompetence($idCompetence);
-    // Add competence data to array
-    if ($competence != null) $competences[] = $competence;
+    $idC[] = $idCompetence; 
+
+    // Check
+    if (empty($idC)) {
+      echo json_encode(["success" => false, "message" => "Aucune donnée reçue"]);
+      exit;
+    }
   }
-    
+  
+  // Get competence data
+  $competences = DataStorage::getCompetences($idC);
   // DB close
   $db->close();
   
