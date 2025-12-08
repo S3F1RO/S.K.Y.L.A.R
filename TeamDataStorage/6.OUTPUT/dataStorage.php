@@ -103,19 +103,19 @@ class DataStorage {
         $db->set_charset("utf8");
 
         // DB select
-        $query = "SELECT firstName, lastName, nickname FROM tblUsers WHERE id = '$idUser';";
+        $query = "SELECT * FROM tblUsers WHERE id = '$idUser';";
         $result = $db->query($query);
         $numRows = $result->num_rows;
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         $data = [];
         // Data from DB
         while ($row = $result->fetch_assoc()) {
+            $data['idUser'] = $row['id'];
             $data['firstName'] = $row['firstName'];
             $data['lastName'] = $row['lastName'];
             $data['nickname'] = $row['nickname'];
@@ -133,19 +133,19 @@ class DataStorage {
         $db->set_charset("utf8");
         
         // DB select
-        $query = "SELECT idUCreator, mainName, subName, domain, 'level', imgUrl, color FROM tblSkills WHERE id = '$idSkill';";
+        $query = "SELECT * FROM tblSkills WHERE id = '$idSkill';";
         $result = $db->query($query);
         $numRows = $result->num_rows;
         
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
         while ($row = $result->fetch_assoc()) {
-            $data['idUCreator'] = $row['idUCreator'];
+            $data['idSkill'] = $row['id'];
+            $data['idCreator'] = $row['idCreator'];
             $data['mainName'] = $row['mainName'];
             $data['subName'] = $row['subName'];
             $data['domain'] = $row['domain'];
@@ -157,8 +157,10 @@ class DataStorage {
         return $data;
         // DB close
     }
-    //GET Comptence infos from idCompetence
-    static function getCompetence($idCompetence) {  //Gets competence infos from if idCompetence
+
+
+    //GETS Basic competences informations
+    static function getCompetence($idCompetence) { 
 
         // DB open
         include_once("./cfgDb.php");
@@ -166,19 +168,19 @@ class DataStorage {
         $db->set_charset("utf8");
         
         // DB select
-        $query = "SELECT idUTeacher, idUStudent, idSkill, currentDate, revokedDate, masteringLevel FROM tblCompetences WHERE id = '$idCompetence';";
+        $query = "SELECT * FROM tblCompetences WHERE id = '$idCompetence';";
         $result = $db->query($query);
         $numRows = $result->num_rows;
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
         while ($row = $result->fetch_assoc()) {
-            $data['idUteacher'] = $row['idUTeacher'];
+            $data['id'] = $row['id'];
+            $data['idUTeacher'] = $row['idUTeacher'];
             $data['idUStudent'] = $row['idUStudent'];
             $data['idSkill'] = $row['idSkill'];
             $data['currentDate'] = $row['currentDate'];
@@ -189,15 +191,17 @@ class DataStorage {
         return $data;
         // DB close
     }
-    //GET skill creator infos from idSkill
-    static function getSkillCreator($idSkill) {  // Get skill's creator infos from idSKill
+
+
+    //GETS Full Skill informations recursively
+    static function getFullSkill($idSkill){
         // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
-        
+
         // DB select
-        $query = "SELECT idUCreator, mainName, subName, domain, level, imgUrl, color 
+        $query = "SELECT *
             FROM `tblCompetences` as competence
             INNER JOIN tblSkills as skill ON competence.idSkill = skill.id 
             WHERE competence.id = 14 AND skill.id = competence.idSkill;";
@@ -206,8 +210,43 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
+        }
+
+        // Data from DB
+        while ($row = $result->fetch_assoc()) {
+            $data['id'] = $row['id'];
+            $data['teacher'] =  $row;
+            $data['idUStudent'] = $row['idUStudent'];
+            $data['idSkill'] = $row['idSkill'];
+            $data['currentDate'] = $row['currentDate'];
+            $data['revokedDate'] = $row['revokedDate'];
+            $data['masteringLevel'] = $row['masteringLevel'];
+        }
+        $result->close();
+        return $data;
+        // DB close
+
+    }
+
+    //GET skill creator infos from idSkill
+    static function getSkillCreator($idSkill) {  // Get skill's creator infos from idSKill
+        // DB open
+        include_once("./cfgDb.php");
+        $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
+        $db->set_charset("utf8");
+        
+        // DB select
+        $query = "SELECT *
+            FROM `tblCompetences` as competence
+            INNER JOIN tblSkills as skill ON competence.idSkill = skill.id 
+            WHERE competence.id = 14 AND skill.id = competence.idSkill;";
+        $result = $db->query($query);
+        $numRows = $result->num_rows;
+
+        // Check
+        if ($numRows == 0) {
+            return NULL;
         }
 
         // Data from DB
@@ -222,7 +261,7 @@ class DataStorage {
     }
     // GET Competence skills infos from idCompetence
     static function getCompetenceSkill($idCompetence){
-         // DB open
+        // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
@@ -238,8 +277,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
@@ -258,7 +296,7 @@ class DataStorage {
     }
     
     static function getCompetenceTeacher($idCompetence){
-         // DB open
+        // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
@@ -274,8 +312,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
@@ -290,7 +327,7 @@ class DataStorage {
     }
 
     static function getCompetenceStudent($idCompetence){
-         // DB open
+        // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
@@ -306,8 +343,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
@@ -322,7 +358,7 @@ class DataStorage {
     }
 
     static function getCompetenceCreator($idCompetence){
-         // DB open
+        // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
@@ -339,8 +375,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
@@ -355,16 +390,15 @@ class DataStorage {
     }
 
     static function getStudentCompetences($idStudent){
-         // DB open
+        // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
         
         // DB select
-        $query = "SELECT firstName, lastName, nickname
-                FROM `tblCompetences` as competence
-                INNER JOIN tblSkills as skill ON competence.idSkill = skill.id 
-                INNER JOIN tblUsers as user ON skill.idUCreator = user.id
+        $query = "SELECT idUTeacher, idSkill, currentDate, revokedDate, masteringLevel
+                FROM `tblUsers` as user
+                INNER JOIN tblCompetences as competence ON user.id = competence.idUStudent 
                 WHERE competence.id = $idCompetence;";
             
         $result = $db->query($query);
@@ -372,8 +406,7 @@ class DataStorage {
 
         // Check
         if ($numRows == 0) {
-            header("Location: logout.php");
-            exit();
+            return NULL;
         }
 
         // Data from DB
