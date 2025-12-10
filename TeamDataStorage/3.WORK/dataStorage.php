@@ -365,6 +365,4 @@ class DataStorage {
 // print_r(DataStorage::getUser(36));
 // print_r(DataStorage::getSkill($idSkill));
 // $competencesList = 28;
-print_r(DataStorage::getCreatorSkills(28));
-
 ?>
