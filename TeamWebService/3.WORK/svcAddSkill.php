@@ -10,8 +10,8 @@
   // Data ajax from server (filtered + escaped)
   $data = json_decode(file_get_contents('php://input'), true);
 
-  $idUCreator = NULL;
-  if (preg_match("/^[0-9]+$/", $data['idUCreator'])) $idUCreator = escape_string($data['idUCreator']);
+  // $idUCreator = NULL;
+  // if (preg_match("/^[0-9]+$/", $data['idUCreator'])) $idUCreator = escape_string($data['idUCreator']);
   $mainName = NULL;
   if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\' ]{1,20}$/", $data['mainName'])) $mainName = escape_string($data['mainName']);
   $subName = "";
@@ -27,7 +27,7 @@
 
   
   // Check
-  if ($idUCreator == NULL || $mainName == NULL || $domain == NULL || $level == NULL || $color == NULL || $imgFile == NULL) {
+  if ($mainName == NULL || $domain == NULL || $level == NULL || $color == NULL || $imgFile == NULL) {
     fail();
     exit;
   }
@@ -45,12 +45,12 @@
   // TEST
   // Save file (À SUPPRIMER)
   $newFilename = generateRandomString($length=20);
-  $success =  move_uploaded_file($_FILES["file"]["tmp_name"], "uploads/$newFilename.png");
+  $success =  move_uploaded_file($imgFile["file"]["tmp_name"], "uploads/$newFilename.png");
 
-  // Add skill
-  $idSkill = DataStorage::addSkill($idUCreator, $mainName, $subName, $domain, $level, $imgUrl, $color);
+  // // Add skill
+  // $idSkill = DataStorage::addSkill($idUCreator, $mainName, $subName, $domain, $level, $imgUrl, $color);
 
-  // JSON send back
-  success(["idSkill" => $idSkill]);
+  // // JSON send back
+  // success(["idSkill" => $idSkill]);
   
 ?>
