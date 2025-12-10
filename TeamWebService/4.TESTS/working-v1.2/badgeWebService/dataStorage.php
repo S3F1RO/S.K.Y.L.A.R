@@ -9,6 +9,7 @@ class DataStorage {
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
+
         // DB insert
         $query = "INSERT INTO tblUsers (id ,firstName, lastName, nickname) VALUES (NULL, '$firstName', '$lastName', '$nickname');";
         $success = $db->query($query);

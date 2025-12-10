@@ -3,28 +3,31 @@
   // Inclusions 
   include_once('./dataStorage.php');
   include_once("./utils.php");
+
   // Allow JSON content
   header("Content-Type: application/json; charset=UTF-8");
   
   // Data ajax from client (filtered + escaped)
   $data = json_decode(file_get_contents('php://input'), true);
+  
   $firstName = NULL;
   if (preg_match("/^[A-Za-z\-éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ]{1,20}$/", $data['firstName'])) $firstName = escape_string($data['firstName']);
   $lastName = NULL;
   if (preg_match("/^[A-Za-z\-éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ ]{1,20}$/", $data['lastName'])) $lastName = escape_string($data['lastName']);
   $nickname = NULL;
   if (preg_match("/^[A-Za-z0-9\-\'\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ& ]{1,20}$/", $data['nickname'])) $nickname = escape_string($data['nickname']);
-  $pubU = NULL;
-  if (preg_match("/^[A-Za-z0-9\-\'\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\=\+ ]{1,1000}$/", $data['pubU'])) $pubU = escape_string($data['pubU']);
 
   // Check
-  if ($firstName == NULL || $lastName == NULL || $nickname == NULL || $pubU == NULL ) {
+  if ($firstName == NULL || $lastName == NULL || $nickname == NULL) {
     echo json_encode([null]);
     exit;
   }
+  
   // Insert user
   $idUser = DataStorage::addUser($firstName, $lastName, $nickname);
+  
   // JSON send back
-  success(["idUser" => $idUser]);
+  echo json_encode(["idUser" => $idUser]);
+  exit;
 
 ?>
