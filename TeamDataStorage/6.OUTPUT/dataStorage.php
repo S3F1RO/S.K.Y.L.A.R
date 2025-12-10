@@ -4,14 +4,14 @@ include_once("./utils.php");
 
 class DataStorage {
     //ADD User
-    static function addUser(string $firstName, string $lastName, string $nickname) {
+    static function addUser(string $firstName, string $lastName, string $nickname, string $pubU) {
         // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
 
         // DB insert
-        $query = "INSERT INTO tblUsers (id ,firstName, lastName, nickname) VALUES (NULL , '$firstName', '$lastName', '$nickname');";
+        $query = "INSERT INTO tblUsers (id ,firstName, lastName, nickname) VALUES (NULL , '$firstName', '$lastName', '$nickname' '$pubU');";
         $success = $db->query($query);
 
         // Check
@@ -27,14 +27,14 @@ class DataStorage {
     }
 
     //ADD Skill
-    static function addSkill(string $idUCreator, string $mainName, string $subName, string $domain, int $level, string $imgUrl, string $color ) {
+    static function addSkill(string $idUCreator, string $mainName, string $subName, string $domain, int $level, string $imgUrl, string $color, string $skillInfosHashCryptPrivUC ) {
         // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
 
         // DB insert
-        $query = "INSERT INTO tblSkills (id ,idUCreator, mainName, subName, domain, level, imgUrl, color) VALUES (NULL , '$idUCreator', '$mainName', '$subName', '$domain', '$level', NULL, '$color');";
+        $query = "INSERT INTO tblSkills (id ,idUCreator, mainName, subName, domain, level, imgUrl, color, $skillInfosHashCryptPrivUC) VALUES (NULL , '$idUCreator', '$mainName', '$subName', '$domain', '$level', NULL, '$color', '$skillInfosHashCryptPrivUC');";
         $success = $db->query($query);
 
         // Check
@@ -50,7 +50,7 @@ class DataStorage {
     }
 
     //ADD Competence
-    static function addCompetence(string $idUTeacher, string $idUStudent, string $idSkill, string $revokedDate, int $masteryLevel) {
+    static function addCompetence(string $idUTeacher, string $idUStudent, string $idSkill, string $revokedDate, int $masteryLevel, string $competenceInfosHashCryptPrivUT) {
         // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
@@ -74,9 +74,9 @@ class DataStorage {
         if ($isTeacher || $skill['idUCreator'] == $idUTeacher) {
             // DB insert
             if ($revokedDate == "") {
-                $query = "INSERT INTO tblCompetences (id ,idUTeacher, idUStudent, idSkill, currentDate, revokedDate, masteringLevel) VALUES (NULL , '$idUTeacher', '$idUStudent', '$idSkill', NOW(), NULL, '$masteryLevel');";
+                $query = "INSERT INTO tblCompetences (id ,idUTeacher, idUStudent, idSkill, currentDate, revokedDate, masteringLevel, competenceInfosHashCryptPrivUT) VALUES (NULL , '$idUTeacher', '$idUStudent', '$idSkill', NOW(), NULL, '$masteryLevel', '$competenceInfosHashCryptPrivUT');";
             } else {
-                $query = "INSERT INTO tblCompetences (id ,idUTeacher, idUStudent, idSkill, currentDate, revokedDate, masteringLevel) VALUES (NULL , '$idUTeacher', '$idUStudent', '$idSkill', NOW(), '$revokedDate', '$masteryLevel');";
+                $query = "INSERT INTO tblCompetences (id ,idUTeacher, idUStudent, idSkill, currentDate, revokedDate, masteringLevel, competenceInfosHashCryptPrivUT) VALUES (NULL , '$idUTeacher', '$idUStudent', '$idSkill', NOW(), '$revokedDate', '$masteryLevel', '$competenceInfosHashCryptPrivUT');";
             }
             $success = $db->query($query);
 
@@ -160,7 +160,7 @@ class DataStorage {
 
 
     //GET Basic competences informations
-    static function getCompetence($idCompetence) { 
+    static function getCompetence($idCompetence,$isMastering=false) { 
 
         // DB open
         include_once("./cfgDb.php");
@@ -176,7 +176,7 @@ class DataStorage {
         if ($numRows == 0) {
             return NULL;
         }
-
+        
         // Data from DB
         while ($row = $result->fetch_assoc()) {
             $data['idCompetence'] = $row['id'];
@@ -273,7 +273,10 @@ class DataStorage {
     //GET informations for multiple competences
     static function getCompetences($idCompetences){
         foreach ($idCompetences as $idCompetence){
-            $competences = DataStorage::getCompetence($idCompetence);
+            $competence = DataStorage::getCompetence($idCompetence);
+            if ($competence != 0){
+                
+            }
         }
         return $competences;
     }
