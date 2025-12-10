@@ -17,7 +17,6 @@ $data = json_decode($_POST['data'], true);
 $firstName = NULL;
 $lastName  = NULL;
 
-
 if (isset($data['firstName'])) {
     $firstName = $data['firstName'];
 }
@@ -26,7 +25,8 @@ if (isset($data['lastName'])) {
 }
 
 // Réponse AJAX envoyée au JavaScript
-$data = sendAjax("http://localhost/SAE32/SAE32-FinalProjet/svcAddUser.php", ["firstName" => $firstName, "lastName"  => $lastName]);
+$data = sendAjax("http://localhost/gitSAE32/SAE32-ProjetFinal/svcAddUser.php", ["firstName" => $firstName, "lastName"  => $lastName]);
 echo json_encode(["success" => true, "id" => $data["id"],"firstName"=>$data["firstName"]]);
 
 ?>
+
