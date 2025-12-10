@@ -14,7 +14,7 @@
             $html .= "<ul>" . $competences['competences'][0]['name'] . "name";
             $html .= "\n<li>Skill : " . $competences['competences'][0]['idSkill'] . "</li>";
             $html .= "\n<li>Teacher: " .  $competences['competences'][0]['idUteacher'] . "</li>";
-            $html .= "\n<li>Date d'obtention: " . $competences['competences'][0]['currentDate'] . "</li>";
+            $html .= "\n<li>Date d'obtention: " . $competences['competences'][0]['beginDate'] . "</li>";
             $html .= "\n<li>Date de fin de certification: " . $competences['competences'][0]['revokedDate'] . "</li>";
 
             if ($competences['competences'][0]['masteringLevel'] == 1) $formattedMasteringLevel = "Comprise";
@@ -33,7 +33,7 @@
                 $html .= "<ul>" . $competences['competences'][$i]['name'] . "name";
                 $html .= "\n<li>Skill : " . $competences['competences'][$i]['idSkill'] . "</li>";
                 $html .= "\n<li>Teacher: " . $competences['competences'][$i]['idUteacher'] . "</li>";
-                $html .= "\n<li>Date d'obtention: " . $competences['competences'][$i]['currentDate'] . "</li>";
+                $html .= "\n<li>Date d'obtention: " . $competences['competences'][$i]['beginDate'] . "</li>";
                 $html .= "\n<li>Date de fin de certification: " . $competences['competences'][$i]['revokedDate'] . "</li>";
                 
                 // Formatting the mastering level
