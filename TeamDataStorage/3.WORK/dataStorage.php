@@ -27,7 +27,7 @@ class DataStorage {
     }
 
     //ADD Skill
-    static function addSkill(string $idUCreator, string $mainName, string $subName, string $domain, int $level, string $imgUrl, string $color, string $skillInfosHashCryptPrivUC ) {
+    static function addSkill(string $idUCreator, string $mainName, string $subName, string $domain, int $level, string $imgUrl, string $color, string $skillInfosHashCryptPrivUC) {
         // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
@@ -283,12 +283,12 @@ class DataStorage {
     }
     //GET informations for multiple competences obtained for a user
     static function getStudentCompetences($idUStudent){
-        $studentCompetences=DataStorage::getCompetences(DataStorage::getStudentIdCompetences($idUStudent));
+        $studentCompetences = DataStorage::getCompetences(DataStorage::getStudentIdCompetences($idUStudent));
         return $studentCompetences;
     }
     //GET informations for multiple competences given by a user
     static function getTeacherCompetences($idUTeacher){
-        $teacherCompetences=DataStorage::getCompetences(DataStorage::getTeacherIdCompetences($idUTeacher));
+        $teacherCompetences = DataStorage::getCompetences(DataStorage::getTeacherIdCompetences($idUTeacher));
         return $teacherCompetences;
     }
 
