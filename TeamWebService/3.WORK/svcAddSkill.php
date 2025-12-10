@@ -22,30 +22,35 @@
   if (preg_match("/^[0-9]+$/", $data['level'])) $level = escape_string($data['level']);
   $color = NULL;
   if (preg_match("/^[A-Fa-f0-9]{6}$/", $data['color'])) $color = escape_string($data['color']);
-  $file = "";
-  if (preg_match("/^.{0,100}$/", $data['file'])) $file = escape_string($data['file']);
+  $imgFile = NULL;
+  if ($data['file']["file"]["error"] == UPLOAD_ERR_OK) $imgFile = $data['file'];
 
   
   // Check
-  if ($idUCreator == NULL || $mainName == NULL || $domain == NULL || $level == NULL || $color == NULL) {
-    echo json_encode([null]);
+  if ($idUCreator == NULL || $mainName == NULL || $domain == NULL || $level == NULL || $color == NULL || $imgFile == NULL) {
+    fail();
     exit;
   }
   
-  // ----- Send img to image WebService -----
-  $imgUrl = sendAjax($URL . "svcAddSkill.php", ["files" => $data['file']]);  
-  if (preg_match("/^.{0,100}$/", $imgUrl)) $imgUrl = escape_string($imgUrl);
+  // // ----- Send img to image WebService -----
+  // $imgUrl = sendAjax($URL . "svcAddSkill.php", ["File" => $imgFile]);  
+  // if (preg_match("/^.{0,100}$/", $imgUrl)) $imgUrl = escape_string($imgUrl);
 
-  // Check
-  if ($imgUrl == NULL) {
-    echo json_encode([null]);
-    exit;
-  }
+  // // Check
+  // if ($imgUrl == NULL) {
+  //   echo json_encode([null]);
+  //   exit;
+  // }
 
-  // add skill
+  // TEST
+  // Save file (À SUPPRIMER)
+  $newFilename = generateRandomString($length=20);
+  $success =  move_uploaded_file($_FILES["file"]["tmp_name"], "uploads/$newFilename.png");
+
+  // Add skill
   $idSkill = DataStorage::addSkill($idUCreator, $mainName, $subName, $domain, $level, $imgUrl, $color);
 
   // JSON send back
-  echo json_encode(["idSkill" => $idSkill]);
+  success(["idSkill" => $idSkill]);
   
 ?>

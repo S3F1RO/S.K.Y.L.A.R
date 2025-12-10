@@ -38,15 +38,10 @@ $(document).ready(function(){
  ============================================================================== */
 
     function receiveAjax(data, domElt) {
-      alert("coucou 5.1");
-
         if (data['success'])
             jQuery(domElt).css("background-color", "green");
         else
             jQuery(domElt).css("background-color", "red");
-
-        alert("coucou 5.2");
-
     }
 
 
