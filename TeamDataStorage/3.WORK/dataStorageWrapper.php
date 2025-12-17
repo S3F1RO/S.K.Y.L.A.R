@@ -39,7 +39,15 @@ NS3omrKpGbHhSU1CzhHqcoc/A3V1pZ6afCGXWHBvB6Q/ClF4Yo+6oNOSa7RHKHS8
 hc1UrbA2fOgvz5w1Fk+CByk=
 -----END PRIVATE KEY-----";
 
-        $pubU = DataStorage::getUser($i);
+        $pubU = "-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArtIWtdFLWu31qjeLZIN0
+JbHsP+m32pihhLyP5xDftnVTx9naQvLvj1ehoz8ClHvvS2TZZP7tQZ5fZ/42niZY
+po2l7cxbYSVEZhVdSvEuTNGlZJSXq8RHT8xE47OVr3SJnnIkFEVtRbQVj2vNxfr+
+nzqOA/NivdyycBSnVwHEojUpVLySfTacdXj4SkEj/OST0P6zvBa6RQyqWERQZ1V0
+tEnTaGc/SGHhsn7N0TmM4DbPXcW0/W5k6gYeNjDpWmbVxiYA9jHfiGf+ejMc/twB
+RJIFmCdDUmDLxI1W89Mw+eJ36DrD0TPXTXFrdQXShoONp2pFcLqgck0mr3Q5tlnK
+MQIDAQAB
+-----END PUBLIC KEY-----";
         
         // Creates false private and public key
         // $falseRes = openssl_pkey_new(['private_key_bits' => 2048]);
