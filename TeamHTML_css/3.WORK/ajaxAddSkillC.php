@@ -2,7 +2,7 @@
 include_once('./utils.php');
 include_once('./params.php');
 
-  echo json_encode(["success" => "coucou 1"]);
+// echo json_encode(["success" => "coucou 1"]);
 
  // File from client (ajax)
  $clientFilename = NULL;
@@ -38,17 +38,16 @@ $color = NULL;
 if (preg_match("/^.{0,20}$/", $_POST['color'])) {
     $color = $_POST['color'];
  }
-
  // Check
-if ($mainName==NULL || $subName==NULL || $domain==NULL || $level==NULL || $color==NULL) {
-    echo json_encode(["success" => false, "message" => "Données incorrectes"]);
-    exit();
- }
+//if ($mainName==NULL || $subName==NULL || $domain==NULL || $level==NULL || $color==NULL) {
+//    echo json_encode(["success" => false, "message" => "Données incorrectes"]);
+//    exit();
+// }
 
 
   // // Save file (à supprimer )
   $newFilename = generateRandomString($length=20);
-  $success =  move_uploaded_file($_FILES["file"]["tmp_name"], "uploads/$newFilename.png");
+  $success =  move_uploaded_file($_FILES["file"]["tmp_name"], "uploads/aaaa$mainName.png");
   
 
 
@@ -60,9 +59,8 @@ $data = sendAjax($URL . "svcAddSkill.php",
                   "level" => $level, 
                   "color" => $color, 
                   "file"  => $_FILES,
-
 ]);
+debug($data);
+success(["idUser" => $data["idUser"]]);
 
-success(["idUser" => $data["idUser"]])
-
-?>]
+?>
