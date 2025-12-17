@@ -7,6 +7,9 @@ class DataStorage {
     static function addUser(string $firstName, string $lastName, string $nickname, string $pubU, string $userInfosHashCryptPrivU) {
         // DB open
         include_once("./cfgDb.php");
+
+        // $id = mmrGetLastNodeId();
+        // $id += 1; 
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
         $db->set_charset("utf8");
 
