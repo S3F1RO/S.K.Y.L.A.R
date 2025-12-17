@@ -21,7 +21,7 @@ class Node {
 
 }
 
-$testNode = new Node(1,"xxc","1","1","2",true);
-echo json_encode($testNode,JSON_PRETTY_PRINT);
+// $testNode = new Node(1,"xxc","1","1","2",true);
+// echo json_encode($testNode,JSON_PRETTY_PRINT);
 
 ?>
