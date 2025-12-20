@@ -43,9 +43,6 @@
   $tag = base64_encode($tag);
 
   //Send DATA and returns idUser
-  $data = sendAjax($URL . "svcAddUser.php", ["firstName" => $firstName, "lastName"  => $lastName, "nickname" => $nickname, "pubU"=>"$pubA"]);
-  
-  //Send DATA and returns idUser
   $data = sendAjax($URL . "svcAddUser.php", ["firstName" => $firstName, "lastName"  => $lastName, "nickname" => $nickname, "pubU"=>"$pubU"]);
   
   //Check if DATA failed
