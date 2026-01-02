@@ -118,7 +118,6 @@
         } else {
             return NULL;
         }
-
     }
 
     function getVerifiedUser($idUser) {
@@ -144,8 +143,18 @@
 
     function getVerifiedCompetence($idCompetence) {
         $competence = DataStorage::getFullCompetence($idCompetence);
-        $data = $competence["idUTeacher"] . $competence["idUStudent"] . $competence["idSkill"] . $competence["beginDate"] . $competence["revokedDate"] . $competence["masteringLevel"];
-        if (verifyData($competence["teacher"]["pubU"], $competence["competenceInfosHashCryptPrivUT"], $data)) {
+
+        $dataCompetence = $competence["idUTeacher"] . $competence["idUStudent"] . $competence["idSkill"] . $competence["beginDate"] . $competence["revokedDate"] . $competence["masteringLevel"];
+        $dataUTeacher = $competence["teacher"]["firstName"] . $competence["teacher"]["lastName"] . $competence["teacher"]["nickname"] . $competence["teacher"]["pubU"];
+        $dataUStudent = $competence["student"]["firstName"] . $competence["student"]["lastName"] . $competence["student"]["nickname"] . $competence["student"]["pubU"];
+        $dataSkill = $competence["skill"]["idUCreator"] . $competence["skill"]["mainName"] . $competence["skill"]["subName"] . $competence["skill"]["domain"] . $competence["skill"]["level"] . $competence["skill"]["color"];
+
+        $isCompetenceVerified = verifyData($competence["teacher"]["pubU"], $competence["competenceInfosHashCryptPrivUT"], $dataCompetence);
+        $isTeacherVerified = verifyData($competence["teacher"]["pubU"], $competence["teacher"]["userInfosHashCryptPrivU"], $dataUTeacher);
+        $isStudentVerified = verifyData($competence["student"]["pubU"], $competence["student"]["userInfosHashCryptPrivU"], $dataUStudent);
+        $isSkillVerified = verifyData($competence["skill"]["creator"]["pubU"], $competence["skill"]["skillInfosHashCryptPrivUC"], $dataSkill);
+
+        if ($isCompetenceVerified && $isTeacherVerified && $isStudentVerified && $isSkillVerified) {
             return $competence;
         } else {
             return NULL;
@@ -155,7 +164,8 @@
     function getVerifiedCompetences($idCompetences) {
         $competences = [];
         foreach ($idCompetences as $idCompetence) {
-            $competences[] = getVerifiedCompetence($idCompetence);
+            $competence = getVerifiedCompetence($idCompetence);
+            if ($competence != NULL) $competences[] = $competence;
         }
         return $competences;      
     }

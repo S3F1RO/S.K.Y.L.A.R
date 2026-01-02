@@ -8,12 +8,12 @@
 ==============================*/
 
 /* Body & Wrapper */
-.wrapper {
+/* .wrapper {
 	min-height: 100vh;
 	max-width: 1200px;
 	margin: 0 auto 0 auto;
 	padding: 1px;
-}
+} */
 
 
 
@@ -22,12 +22,12 @@
 ==============================*/
 
 /* Set font */
-* {
+/* * {
 	font-family: 'Ubuntu', 'Arial', 'Helvetica', 'Palatino', sans-serif;
-}
+} */
 
 /* Body & Wrapper */
-body {
+/* body {
 	background: #3B82F6;
     min-height: 100vh;
     margin: 35px;
@@ -43,7 +43,7 @@ body {
   padding: 40px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
+} */
 
   /* Titles */
 
@@ -59,7 +59,6 @@ li {
     padding: 30px 0;
     display: flex;
     gap: 15px;
-    
 }
 
 input {
@@ -116,8 +115,128 @@ span {
 
 /* Media query : mobile */
 @media (max-width: 600px) {
+  /* ===========================
+   PAGE COMPÉTENCE – MOBILE ONLY
+   =========================== */
 
+  /* Base */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: #f4f6f8;
+    color: #1a1a1a;
+  }
 
+  /* ===========================
+    HEADER
+    =========================== */
+  body > header {
+    background-color: #ffffff;
+    padding: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  /* Image principale */
+  body > header > img {
+    display: block;
+    width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    border-radius: 8px;
+    background-color: #eee;
+  }
+
+  /* Liste des détails */
+  body > header > ul {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0 0;
+  }
+
+  body > header > ul > li {
+    font-size: 0.9rem;
+    padding: 4px 0;
+    line-height: 1.4;
+  }
+
+  /* Titre principal (1er li) */
+  body > header > ul > li:first-child {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+
+  /* ===========================
+    ARTICLE
+    =========================== */
+  body > article {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Carte de compétence */
+  body > article > ul {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+
+    /* Layout icône + contenu */
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    column-gap: 10px;
+    row-gap: 4px;
+    align-items: start;
+  }
+
+  /* Colonne image */
+  body > article > ul > li {
+    padding: 0;
+    display: block;
+    gap: 0px;
+  }
+
+  body > article > ul > li.img {
+    grid-row: 1 / span 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body > article > ul > li.img img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  /* Texte */
+  body > article > ul > li:not(.img) {
+    font-size: 0.85rem;
+    line-height: 1.35;
+    word-break: break-word;
+  }
+
+  /* Titre de la compétence */
+  body > article > ul > li:not(.img):first-of-type {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  /* ===========================
+    ACCESSIBILITÉ & LISIBILITÉ
+    =========================== */
+  img {
+    max-width: 100%;
+  }
+
+  ul {
+    padding-left: 0;
+  }
 }
 
 

@@ -1,58 +1,58 @@
 <?php 
-    include_once("./utils.php");
-    include_once("./params.php");
-    
-    if (isset($_GET['idC']) && $_GET['idC']!= "") {
-        $idCompetences=explode(",",$_GET['idC']);
-        $data=['idCompetences'=>$idCompetences];
-        $competences=sendAjax("$URL"."svcGetCompetences.php",$data);
-        if (!$competences['success']) $html="No competencies found";
-        else{
-          $html.="\n<img src='./".$competences['competences'][0]['imgUrl']."' alt='Image diplôme'/>";
-          $html.="<ul>".$competences['competences'][0]['name'] ."name";
-          $html.="\n<li>Skill : ".$competences['competences'][0]['idSkill']."</li>";
-          $html.="\n<li>Teacher: ". $competences['competences'][0]['idUteacher']."</li>";
-          $html.="\n<li>Date d'obtention: ".$competences['competences'][0]['currentDate']."</li>";
-          $html.="\n<li>Date de fin de certification: ".$competences['competences'][0]['revokedDate']."</li>";
-          if ($competences['competences'][0]['masteringLevel'] == 1) $formattedMasteringLevel = "Comprise";
-          else if ($competences['competences'][0]['masteringLevel'] == 2) $formattedMasteringLevel = "Acquise";
-          else if ($competences['competences'][0]['masteringLevel'] == 3) $formattedMasteringLevel = "Maîtrisée";
-          else if ($competences['competences'][0]['masteringLevel'] == 4) $formattedMasteringLevel = "Enseignée";
-          $html.="\n<li>Niveau de maîtrise: ". $formattedMasteringLevel."</li>";
-          $html.="\n<li>Skill : ".$competences['competences'][0]['idSkill']."</li>";
-          $html.="\n<li>Teacher: ". $competences['competences'][0]['idUteacher']."</li>";
-          $html.="\n</ul>";
-          for ($i=1 ; $i<count($competences['competences']) ; $i++) {
-            $html.="\n<ul class='competence'>";
-            $html.= "\n<img src='./".$competences['competences'][$i]['urlImage']."' alt='Image diplôme'>";
-            $html.="<ul>".$competences['competences'][$i]['name'] ."name";
-            $html.="\n<li>Skill : ".$competences['competences'][$i]['idSkill']."</li>";
-            $html.="\n<li>Teacher: ". $competences['competences'][$i]['idUteacher']."</li>";
-            $html.="\n<li>Date d'obtention: ".$competences['competences'][$i]['currentDate']."</li>";
-            $html.="\n<li>Date de fin de certification: ".$competences['competences'][$i]['revokedDate']."</li>";
-            
-            // Formatting the mastering level
-            if ($competences[$i]['masteringLevel'] == 1) $formattedMasteringLevel = "Comprise";
-            else if ($competences[$i]['masteringLevel'] == 2) $formattedMasteringLevel = "Acquise";
-            else if ($competences[$i]['masteringLevel'] == 3) $formattedMasteringLevel = "Maîtrisée";
-            else if ($competences[$i]['masteringLevel'] == 4) $formattedMasteringLevel = "Enseignée";
-            
-            $html.="\n<li>Niveau de maîtrise: ". $formattedMasteringLevel."</li>";
-            $html.="\n<li>Skill : ".$competences[$i]['idSkill']."</li>";
-            $html.="\n<li>Teacher: ". $competences[$i]['idUteacher']."</li>";
-            $html.="\n</ul>";
-            $html.="\n</ul>";
-          }
-        }
+
+  include_once("./utils.php");
+  include_once("./params.php");
+  
+  if (isset($_GET['idC']) && $_GET['idC'] != "") {
+    $idCompetences = explode(",", $_GET['idC']);
+    $data = ['idCompetences' => $idCompetences];
+    $competences = sendAjax($URL . "svcGetCompetences.php", $data);
+
+    if (!$competences['success']) $html = "No competencies found";
+    else {
+      if ($competences['competences'][0]['masteringLevel'] == 1) $formattedMasteringLevel = "Comprise";
+      else if ($competences['competences'][0]['masteringLevel'] == 2) $formattedMasteringLevel = "Acquise";
+      else if ($competences['competences'][0]['masteringLevel'] == 3) $formattedMasteringLevel = "Maîtrisée";
+      else if ($competences['competences'][0]['masteringLevel'] == 4) $formattedMasteringLevel = "Enseignée";
+
+      $sectionHtml .= "<img src='" . $competences['competences'][0]["skill"]['imgUrl'] . "' alt='Image certif'/>\n";
+      $sectionHtml .= "\n        <ul>";
+      $sectionHtml .= "\n          <li>" . $competences['competences'][0]["skill"]['mainName'] . "</li>";
+      $sectionHtml .= "\n          <li>N° d'aptitude : " . $competences['competences'][0]['idSkill'] . "</li>";
+      $sectionHtml .= "\n          <li>N° de compétence : " . $competences['competences'][0]['idCompetence'] . "</li>";
+      $sectionHtml .= "\n          <li>Créateur : " . $competences['competences'][0]["skill"]['creator']["nickname"] . "</li>";
+      $sectionHtml .= "\n          <li>Donné par : " . $competences['competences'][0]['teacher']["nickname"] . "</li>";
+      $sectionHtml .= "\n          <li>À : " . $competences['competences'][0]['student']["nickname"] . "</li>";
+      $sectionHtml .= "\n          <li>Niveau de maîtrise : " . $formattedMasteringLevel . "</li>";
+      $sectionHtml .= "\n          <li>Date d'obtention : " . dateInFr($competences['competences'][0]['beginDate']) . "</li>";
+      $revokedDate = $competences['competences'][0]['revokedDate'];
+      if ($revokedDate != NULL) $sectionHtml .= "\n          <li>Date d'expiration : " . dateInFr($competences['competences'][0]['revokedDate']) . "</li>";
+      $sectionHtml .= "\n        </ul>\n";
+
+      for ($i = 1 ; $i < count($competences['competences']) ; $i++) {
+        // Formatting the mastering level
+        if ($competences[$i]['masteringLevel'] == 1) $formattedMasteringLevel = "Comprise";
+        else if ($competences[$i]['masteringLevel'] == 2) $formattedMasteringLevel = "Acquise";
+        else if ($competences[$i]['masteringLevel'] == 3) $formattedMasteringLevel = "Maîtrisée";
+        else if ($competences[$i]['masteringLevel'] == 4) $formattedMasteringLevel = "Enseignée";
+
+        $html .= "        <ul>";
+        $html .= "\n          <li class='img'><img src='" . $competences['competences'][$i]["skill"]['imgUrl'] . "' alt='Image diplôme'></li>";
+        $html .= "\n          <li>" . $competences['competences'][$i]["skill"]['mainName'] . "</li>";
+        $html .= "\n          <li>Domain : " . $competences['competences'][$i]['skill']["domain"] . "</li>";
+        $html .= "\n          <li>Obtenu par : " . $competences['competences'][0]['student']["nickname"] . "</li>";
+        $html .= "\n          <li>Niveau de maîtrise : " . $formattedMasteringLevel . "</li>";
+        $html .= "\n        </ul>\n\n";
+      }
     }
-    else if (isset($_GET['idS']) && $_GET['idS']!= "") {
-        $idCompetences=explode(",",$_GET['idS']);
-        // print_r($idCompetences);
-        $data=['idCompetences'=>$idCompetences];
-        $tokenData=sendAjax("$URL"."svcGetCompetences.php",$data);
-        print_r($tokenData);
-    }
-    else $html="No competencies found"
+  } else if (isset($_GET['idS']) && $_GET['idS'] != "") {
+    $idCompetences = explode(",", $_GET['idS']);
+    // print_r($idCompetences);
+    $data = ['idCompetences' => $idCompetences];
+    $tokenData = sendAjax($URL . "svcGetCompetences.php", $data);
+    print_r($tokenData);
+  } else $html = "No competencies found";
+
 ?>
 <!DOCTYPE html>
 
@@ -75,48 +75,22 @@
     <meta charset='UTF-8'>
 
     <!-- Prevent from zooming -->
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0,  shrink-to-fit=no"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0,  shrink-to-fit=no">
 
     <!-- Icon -->
-    <link rel='icon' type='image/png' href='./medias/iut.png' />
+    <link rel='icon' type='image/png' href='./medias/RTSAE.png' />
 
     <!-- Title -->
     <title>Compétence</title>
     <body>
-      <style>
-        ul:first {
-          padding-bottom: 5vh;
-          border: 1vh black solid;
-          border-style: none none solid;
-        }
-        .competence{
-          display:flex;
-          flex-direction: row;
-          align-items: center;
-        }
-        .competence li {
-          margin-left:2vh;
-        }
-        ul {
-          display:flex;
-          flex-direction: column;
-          margin-top:1vh;
-        }
-        ul ul{
-          display:flex;
-          flex-direction: column
-        }
-        li{
-          margin:0vh;
-          gap:0;
-          padding:0;
-        }
-      </style>
-      <ul>
-        <?php echo $html;?>
-      </ul>
+
+      <header>
+        <?=$sectionHtml?>
+      </header>
+
+      <article>
+<?php echo $html;?>
+      </article>
     </body>
-
   </head>
-
-
+</html>

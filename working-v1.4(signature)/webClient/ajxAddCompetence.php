@@ -7,14 +7,17 @@
   session_start();
   $idUTeacher = NULL;
   if (isset($_SESSION['idUser'])) $idUTeacher = $_SESSION['idUser'];
+  $privUT = NULL;
   if (isset($_SESSION['privU'])) $privUT = $_SESSION['privU'];
 
   $html = "Information(s) incorrecte(s)";
 
   // Check
-  if ($idUTeacher == NULL) {
+  if ($idUTeacher == NULL || $privUT == NULL) {
     fail($html);
   }
+
+  // Data ajax from client (filtered + escaped)
   if (isset($_POST['data'])) $data = json_decode($_POST['data'], true);
   $idUStudent = NULL;
   if (preg_match("/^[0-9]+$/", $data['idUStudent'])) $idUStudent = $data['idUStudent'];
@@ -30,7 +33,9 @@
     fail($html);
   }
 
+  // Dates regularization
   $beginDate = date('Y-m-d H:i:s');
+  if ($revokedDate != NULL) $revokedDate .= " 00:00:00";
 
   // Signature
   $privUT = base64_decode($privUT);
@@ -38,17 +43,12 @@
   openssl_sign($signatureData, $competenceInfosHashCryptPrivUT, $privUT, OPENSSL_ALGO_SHA256);
   $competenceInfosHashCryptPrivUT = base64_encode($competenceInfosHashCryptPrivUT);
 
-  $competence = ["idUTeacher" => $idUTeacher, "idUStudent" => $idUStudent, "idSkill" => $idSkill, "beginDate" => $beginDate, "revokedDate" => $revokedDate, "masteringLevel" => $masteringLevel, "competenceInfosHashCryptPrivUT" => $competenceInfosHashCryptPrivUT];
-  
   // ----- Send to WebService -----
+  $competence = ["idUTeacher" => $idUTeacher, "idUStudent" => $idUStudent, "idSkill" => $idSkill, "beginDate" => $beginDate, "revokedDate" => $revokedDate, "masteringLevel" => $masteringLevel, "competenceInfosHashCryptPrivUT" => $competenceInfosHashCryptPrivUT];
   $data = sendAjax($URL . "svcAddCompetence.php", $competence);
 
   // Check response
-  if (!$data["success"]) {
-    // fail($html);
-    fail($data['html']);
-  } else {
-    // Client response
-    success(["idCompetence" => $data["idCompetence"]]);
-  }
+  if (!$data["success"]) fail($html);
+  else success(["idCompetence" => $data["idCompetence"]]);
+
 ?>
