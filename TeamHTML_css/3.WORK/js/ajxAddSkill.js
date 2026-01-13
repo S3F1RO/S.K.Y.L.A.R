@@ -7,6 +7,10 @@ $(document).ready(function(){
     // Send files with ajax on button click
     jQuery("body").on("click", "#btnOK", function() {
 
+    // Mettre à jour la valeur du slider en direct
+    jQuery("input[name='level']").on("input", function() {
+      jQuery("#levelValue").text(this.value);
+    });
 
         // Get file
         var file = jQuery("input[type='file']")[0].files[0];
@@ -20,7 +24,7 @@ $(document).ready(function(){
 
 
         // Send file
-        sendAjaxFile("ajaxAddSkillC.php", file, {
+        sendAjaxFile("ajaxAddSkill.php", file, {
             mainName: mainName,
             subName: subName,
             domain: domain,

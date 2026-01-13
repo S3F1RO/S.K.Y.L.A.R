@@ -1,63 +1,70 @@
 <?php
 
-  include_once('./utils.php');
-  include_once('./params.php');
-  include_once('./cfgDbWebClient.php');
-  
-  //Open DB
-  $db = new mysqli(DBWEBCLIENT_HOST, DBWEBCLIENT_LOGIN, DBWEBCLIENT_PWD, DBWEBCLIENT_NAME);
-  $db->set_charset("utf8");
-  $html = "Prénom, nom ou pseudo invalide";
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
 
-  // Check
-  if (!isset($_POST['data'])) fail($html);
 
-  // JSON decode
-  $data = json_decode($_POST['data'], true);
+include_once('./utils.php');
+include_once('./params.php');
+include_once('./cfgDbWebClient.php');
+include_once('./cfgDb.php');
 
-  if (isset($_POST['data'])) $data = json_decode($_POST['data'], true);
-  $firstName = NULL;
-  if (preg_match("/^[A-Za-z\-éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ]{1,20}$/", $data['firstName'])) $firstName = $data['firstName'];
-  $lastName = NULL;
-  if (preg_match("/^[A-Za-z\-éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ ]{1,20}$/", $data['lastName'])) $lastName = $data['lastName'];
-  $nickname = NULL;
-  if (preg_match("/^[A-Za-z0-9\-\'\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ& ]{1,20}$/", $data['nickname'])) $nickname = $data['nickname'];
-  $passphrase = NULL;
-  if (preg_match("/^[A-Za-z0-9\-\'\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ& ]{1,20}$/", $data['passphrase'])) $passphrase = $data['passphrase'];
-  // Check
-  if ($lastName == NULL || $nickname == NULL || $firstName == NULL || $passphrase == NULL ) fail($html);
-  //Creation of the Asym key couple
-  $keysU = openssl_pkey_new(array('private_key_bits' => 2048, 'private_key_type' => OPENSSL_KEYTYPE_RSA));
-  openssl_pkey_export($keysU, $privU);                                          // Private key
-  $pubU = openssl_pkey_get_details($keysU)['key'];
-  
-  //Encrypt Key 
-  $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length("aes-256-gcm"));   // Generate initialization vector
-  $encryptedPrivKey = openssl_encrypt($privU, "aes-256-gcm", $passphrase, $options=0, $iv, $tag); // Encrypt data and generate authentication tag
-  $encryptedPrivKey = base64_encode($encryptedPrivKey);
-  
-  //Encode to be lisible
-  $privU = base64_encode($privU);
-  $pubU = base64_encode($pubU);   
-  $iv = base64_encode($iv);
-  $tag = base64_encode($tag);
+// DB pour infos tblUsers
+$dbUsers = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
+$dbUsers->set_charset("utf8");
+// DB pour tblClientUsers
+$db = new mysqli(DBWEBCLIENT_HOST, DBWEBCLIENT_LOGIN, DBWEBCLIENT_PWD, DBWEBCLIENT_NAME);
+$db->set_charset("utf8");
 
-  //Send DATA and returns idUser
-  $data = sendAjax($URL . "svcAddUser.php", ["firstName" => $firstName, "lastName"  => $lastName, "nickname" => $nickname, "pubU"=>"$pubA"]);
-  
-  //Send DATA and returns idUser
-  $data = sendAjax($URL . "svcAddUser.php", ["firstName" => $firstName, "lastName"  => $lastName, "nickname" => $nickname, "pubU"=>"$pubU"]);
-  
-  //Check if DATA failed
-  if (!$data['success']) fail($html);
-  
-  //Insert DATA into DB
-  $idUser = $data['idUser'];
-  $query = "INSERT INTO `tblUsers` (`idUser`, `privUCryptPassU`, `privUCryptIv`, `privUCryptTag`) VALUES ('$idUser', '$encryptedPrivKey', '$iv', '$tag');";
-  $success = $db->query($query);
-  
-  if (!$success) fail($html);
-  
-  success(["idUser" => $idUser]);
+$html = "Invalid first name, last name, nickname or password";
+
+// Check POST data
+if (!isset($_POST['data'])) fail($html);
+$data = json_decode($_POST['data'], true);
+
+// Validate inputs
+$firstName = preg_match("/^[A-Za-z\-éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ]{1,20}$/", $data['firstName']) ? $dbUsers->real_escape_string($data['firstName']) : null;
+$lastName  = preg_match("/^[A-Za-z\-éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ ]{1,20}$/", $data['lastName']) ? $dbUsers->real_escape_string($data['lastName']) : null;
+$nickname  = preg_match("/^[A-Za-z0-9\-\'\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ& ]{1,20}$/", $data['nickname']) ? $dbUsers->real_escape_string($data['nickname']) : null;
+$passphrase = !empty($data['passphrase']) ? $data['passphrase'] : null;
+
+if (!$firstName || !$lastName || !$nickname || !$passphrase) fail($html);
+
+// Insert into tblUsers
+$query = "INSERT INTO `tblUsers` (`firstName`, `lastName`, `nickname`) VALUES ('$firstName', '$lastName', '$nickname')";
+if (!$dbUsers->query($query)) fail("User insertion error: " . $dbUsers->error);
+
+$idUser = $dbUsers->insert_id;
+
+// Generate keys
+$keysU = openssl_pkey_new(['private_key_bits'=>2048,'private_key_type'=>OPENSSL_KEYTYPE_RSA]);
+openssl_pkey_export($keysU, $privU);
+$pubU = openssl_pkey_get_details($keysU)['key'];
+
+// Encrypt private key
+$iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length("aes-256-gcm"));
+$encryptedPrivKey = openssl_encrypt($privU, "aes-256-gcm", $passphrase, 0, $iv, $tag);
+
+// Signature
+$pubU = base64_encode($pubU);
+openssl_sign($firstName.$lastName.$nickname.$pubU, $userInfosHashCryptPrivU, $privU, OPENSSL_ALGO_SHA256);
+
+// Encode for storage
+$userInfosHashCryptPrivU = base64_encode($userInfosHashCryptPrivU);
+$encryptedPrivKey = base64_encode($encryptedPrivKey);
+$iv = base64_encode($iv);
+$tag = base64_encode($tag);
+
+// Insert into tblClientUsers
+$query = "INSERT INTO `tblClientUsers` (`id`, `privUCryptPassU`, `privUCryptPassUIv`, `privUCryptPassUTag`) 
+          VALUES ($idUser, '$encryptedPrivKey', '$iv', '$tag')";
+if (!$db->query($query)) fail("Client user insertion error: ".$db->error);
+header('Content-Type: application/json');
+echo json_encode([
+    "success" => true,
+    "idUser" => $idUser
+]);
+exit();
 
 ?>

@@ -8,11 +8,12 @@ $(document).ready(function(){
   // On page load
 
   // On click OK button
-  jQuery("body").on("click", ".ok", function() {
+  jQuery("body").on("click", ".btn-continue", function() {
     var firstName = jQuery("input[name='firstName']").val();
     var lastName = jQuery("input[name='lastName']").val();
     var nickname = jQuery("input[name='nickname']").val();
-    var passphrase = jQuery("input[name='passphrase']").val();
+    var passphrase = jQuery("input[name='password']").val();
+
     
     sendAjax("ajaxAddUser.php", {
       'firstName': firstName,
@@ -27,7 +28,7 @@ $(document).ready(function(){
       var firstName = jQuery("input[name='firstName']").val();
       var lastName = jQuery("input[name='lastName']").val();
       var nickname = jQuery("input[name='nickname']").val();
-      var passphrase = jQuery("input[name='passphrase']").val();
+      var passphrase = jQuery("input[name='password']").val();
       
       sendAjax("ajaxAddUser.php", {
         'firstName': firstName,
@@ -62,7 +63,18 @@ $(document).ready(function(){
     jsonData = JSON.stringify(data);
     jQuery.ajax({type: 'POST', url: serverUrl, dataType: 'json', data: "data=" + jsonData,
       success: function(data) {
-        receiveAjax(data);
+        //receiveAjax(data);
+
+        if (data.success) {
+          // Redirige vers étape 2 avec idUser en GET
+          window.location.href = "addSkill.php?idUser=" + data.idUser;
+        } else {
+          alert(data.html || "Erreur inconnue !");
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error("AJAX Error:", error);
+        alert("Erreur serveur !");
       }
     });
   }
