@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html>
@@ -28,53 +27,37 @@
   <body>
     <!-- Wrapper -->
     <div class='wrapper'>
+    
+      <h1>Ajouter un utilisateur</h1>
+    <!-- Progress-bar simple -->
 
-  <h1>Ajouter un utilisateur</h1>
+      <div class="progress-bar">
+        <div class="progress-step active">1<span>Utilisateur</span></div>
+        <div class="progress-step locked">2<span>Compétence</span></div>
+        <div class="progress-step locked">3<span>Attribution</span></div>
+      </div>
 
-  <!-- Progress bar -->
-  <div class="progress-bar">
-    <div class="progress-step active">
-      <div class="circle">1</div>
-      <span>Utilisateur</span>
-    </div>
-    <div class="progress-step locked">
-      <div class="circle">2</div>
-      <span>Compétence</span>
-    </div>
-    <div class="progress-step locked">
-      <div class="circle">3</div>
-      <span>Attribution</span>
-    </div>
-  </div>
 
-  <!-- Étape 1 -->
-  <form id="step1">
+    <div id="step1">
+      <div class="form-group">
+        <label>Nom *</label>
+        <input type="text" name="lastName" placeholder="Entrez le nom">
+      </div>
+      <div class="form-group">
+        <label>Prénom *</label>
+        <input type="text" name="firstName" placeholder="Entrez le prénom">
+      </div>
+      <div class="form-group">
+        <label>Pseudo</label>
+        <input type="text" name="nickname" placeholder="Entrez le pseudo">
+      </div>
+      <div class="form-group">
+        <label>Mot de passe *</label>
+        <input type="password" name="password" placeholder="Mot de passe">
+      </div>
 
-    <div class="form-group">
-      <label for="lastName">Nom <span class="required">*</span></label>
-      <input type="text" id="lastName" name="lastName" placeholder="Entrez le nom" required>
-    </div>
+      <button class="btn-continue">Continuer →</button>
 
-    <div class="form-group">
-      <label for="firstName">Prénom <span class="required">*</span></label>
-      <input type="text" id="firstName" name="firstName" placeholder="Entrez le prénom" required>
-    </div>
-
-    <div class="form-group">
-      <label for="nickname">Pseudo</label>
-      <input type="text" id="nickname" name="nickname" placeholder="Entrez le pseudo">
-    </div>
-
-    <div class="form-group">
-      <label for="password">Mot de passe <span class="required">*</span></label>
-      <input type="password" id="password" name="password" placeholder="Mot de passe" required>
-    </div>
-
-    <button type="button" class="btn-continue">Continuer →</button>
-
-  </form>
-
-</div>
-
+      </div>
 </body>
 </html>
