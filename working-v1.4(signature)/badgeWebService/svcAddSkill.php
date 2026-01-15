@@ -3,54 +3,50 @@
   // Includes
   include_once('./utils.php');
   include_once('./params.php');
-  include_once('./dataStorage.php');
-
-  // Default error message
-  $html = "Information(s) invalide(s) ou manquante(s)";
+  include_once('./dataStorageWrapper.php');
 
   // Allow JSON content
   header("Content-Type: application/json; charset=UTF-8");
 
   // Data from client (ajax)
   $idUCreator = NULL;
-  if (preg_match("/^[0-9]+$/", $_POST['idUCreator'])) $idUCreator = escape_string($_POST['idUCreator']);
+  if (preg_match("/^[0-9]{1,20}$/", $_POST['idUCreator'])) $idUCreator = escape_string($_POST['idUCreator']);
   $mainName = NULL;
-  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $_POST['mainName'])) $mainName =$_POST['mainName'];
+  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $_POST['mainName'])) $mainName = escape_string($_POST['mainName']);
   $subName = "";
-  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $_POST['subName'])) $subName = $_POST['subName'];
+  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $_POST['subName'])) $subName = escape_string($_POST['subName']);
   $domain = NULL;
-  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $_POST['domain'])) $domain = $_POST['domain'];
+  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $_POST['domain'])) $domain = escape_string($_POST['domain']);
   $level = NULL;
-  if (preg_match("/^[0-9]+$/", $_POST['level'])) $level = $_POST['level'];
+  if (preg_match("/^[0-8]$/", $_POST['level'])) $level = escape_string($_POST['level']);
   $color = NULL;
-  if (preg_match("/^.{0,20}$/", $_POST['color'])) $color = $_POST['color'];
+  if (preg_match("/^.{1,20}$/", $_POST['color'])) $color = escape_string($_POST['color']);
   $skillInfosHashCryptPrivUC = NULL;
-  if (preg_match("/^.+$/", $data['skillInfosHashCryptPrivUC'])) $skillInfosHashCryptPrivUC = $data['skillInfosHashCryptPrivUC'];
+  if (preg_match("/^.+$/", $_POST['skillInfosHashCryptPrivUC'])) $skillInfosHashCryptPrivUC = escape_string($_POST['skillInfosHashCryptPrivUC']);
   $imgFile = $_FILES['file'];
 
   // Check
   if ($idUCreator == NULL || $mainName == NULL || $domain == NULL || $level == NULL || $color == NULL || $skillInfosHashCryptPrivUC == NULL || !isset($imgFile) || $imgFile['error'] !== UPLOAD_ERR_OK) {
-    fail($html);
-    exit();
-  } 
+    fail();
+  }
+
   
   // ----- Send img to image WebService -----
-  $data = sendAjaxImg($URL . "svcImgAddSkill.php", [], ["file" => $imgFile]);  
-  $imgUrl = $URL;
-  if (preg_match("/^.{0,100}$/", $data['imgPath'])) $imgUrl .= escape_string($data['imgPath']);
+  $data = sendAjaxImg($URL . "addImgSkill.php", [], ["file" => $imgFile]);
+  $imgUrl = NULL;
+  if (preg_match("/^.{32}$/", $data['imgPath'])) $imgUrl = $URL . escape_string($data['imgPath']);
 
   // Check
   if ($imgUrl == NULL) {
-    fail($html);
-    exit;
+    fail();
   }
 
   // Add skill
   $idSkill = addVerifiedSkill($idUCreator, $mainName, $subName, $domain, $level, $imgUrl, $color, $skillInfosHashCryptPrivUC);
 
   // JSON send back
-  echo json_encode(["idSkill" => $idSkill]);
-  
+  if ($idSkill == NULL) fail();
+  success(["idSkill" => $idSkill]);
 
 
 

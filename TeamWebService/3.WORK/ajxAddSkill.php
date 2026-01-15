@@ -19,7 +19,7 @@ $html = "Information(s) invalide(s) ou manquante(s)";
   $idUCreator = NULL;
   if (preg_match("/^[0-9]+$/", $_POST['idUCreator'])) $idUCreator = $_POST['idUCreator'];
   $mainName = NULL;
-  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\' ]{1,20}$/", $_POST['mainName'])) $mainName =$_POST['mainName'];
+  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\' ]{1,20}$/", $_POST['mainName'])) $mainName = $_POST['mainName'];
   $subName = NULL;
   if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\' ]{1,20}$/", $_POST['subName'])) $subName = $_POST['subName'];
   $domain = NULL;
@@ -55,7 +55,7 @@ $data = sendAjaxImg(
 
 // Check response
 if (!isset($data["idSkill"])) {
-fail($html);
+  fail($html);
 }
 
 // Client response

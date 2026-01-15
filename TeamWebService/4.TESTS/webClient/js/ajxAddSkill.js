@@ -23,7 +23,7 @@ $(document).ready(function(){
         var subName  = jQuery("input[name='subName']").val();
         var domain   = jQuery("input[name='domain']").val();
         var level    = jQuery("input[name='level']").val();
-        var color    = jQuery("input[name='color']").val();
+        var color    = jQuery("input[type='color']").val().substring(1);
 
 
         // Send file
