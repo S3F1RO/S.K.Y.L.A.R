@@ -18,26 +18,26 @@
 
   // File from client (ajax)
   $clientFilename = NULL;
-  if ($_FILES["file"]["error"] === UPLOAD_ERR_OK) {
+  if ($_FILES["file"]["error"] == UPLOAD_ERR_OK) {
     $clientFilename = $_FILES["file"]["name"];
   } else {
     fail("Aucun fichier");
   }
 
-  if (isset($_POST['data'])) $data = json_decode($_POST['data'], true);
   $mainName = NULL;
-  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $data['mainName'])) $mainName = $data['mainName'];
+  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $_POST['mainName'])) $mainName = $_POST['mainName'];
   $subName = NULL;
-  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $data['subName'])) $subName = $data['subName'];
+  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $_POST['subName'])) $subName = $_POST['subName'];
   $domain = NULL;
-  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $data['domain'])) $domain = $data['domain'];
+  if (preg_match("/^[A-Za-z0-9\-\#éèêëÉÈÊËàâäÀÂÄïìîÏÌÎÿŷỳŸỲŶùûüÙÛÜòôöÒÔÖçÇ&\'\.:,! ]{1,20}$/", $_POST['domain'])) $domain = $_POST['domain'];
   $level = NULL;
-  if (preg_match("/^[0-8]+$/", $data['level'])) $level = $data['level'];
+  if (preg_match("/^[0-8]$/", $_POST['level'])) $level = $_POST['level'];
   $color = NULL;
-  if (preg_match("/^[A-Fa-f0-9]{6}$/", $data['color'])) $color = $data['color'];
+  if (preg_match("/^[A-Fa-f0-9]{6}$/", $_POST['color'])) $color = $_POST['color'];
+  $imgFile = $_FILES['file'];
 
   // Check
-  if ($mainName == NULL || $domain == NULL || $level == NULL || $color == NULL) {
+  if ($mainName == NULL || $domain == NULL || $level == NULL || $color == NULL || !isset($imgFile) || $imgFile['error'] !== UPLOAD_ERR_OK) {
     fail($html);
   }
   
@@ -50,7 +50,7 @@
   $data = sendAjaxImg(
       $URL . "svcAddSkill.php",
       [
-          "idUCreator" => $idUCreator,
+          "idUCreator" => $idUser,
           "mainName" => $mainName,
           "subName"  => $subName,
           "domain"   => $domain,
@@ -63,7 +63,7 @@
 
   // Check response
   if (!$data["success"]) {
-    fail($html);
+    fail($data["html"]);
   } else {
     // Client response
     success(["idSkill" => $data["idSkill"]]);

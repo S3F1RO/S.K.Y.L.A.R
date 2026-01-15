@@ -42,7 +42,7 @@ class DataStorage {
         $db->set_charset("utf8");
 
         // DB insert
-        $query = "INSERT INTO tblSkills (id, idUCreator, mainName, subName, domain, `level`, imgUrl, color, skillInfosHashCryptPrivUC) VALUES (NULL , '$idUCreator', '$mainName', '$subName', '$domain', '$level', NULL, '$color', '$skillInfosHashCryptPrivUC');";
+        $query = "INSERT INTO tblSkills (id, idUCreator, mainName, subName, domain, `level`, imgUrl, color, skillInfosHashCryptPrivUC) VALUES (NULL , '$idUCreator', '$mainName', '$subName', '$domain', '$level', '$imgUrl', '$color', '$skillInfosHashCryptPrivUC');";
         $success = $db->query($query);
 
         // Check
@@ -59,7 +59,7 @@ class DataStorage {
     }
 
     //ADD Competence
-    static function addCompetence(string $idUTeacher, string $idUStudent, string $idSkill, string $beginDate, string $revokedDate, int $masteringLevel, string $competenceInfosHashCryptPrivUT) {
+    static function addCompetence(string $idUTeacher, string $idUStudent, string $idSkill, string $beginDate, string $revokedDate, int $masteringLevel, string $imgCUrl, string $competenceInfosHashCryptPrivUT) {
         // DB open
         include_once("./cfgDb.php");
         $db = new mysqli(DB_HOST, DB_LOGIN, DB_PWD, DB_NAME);
@@ -67,9 +67,9 @@ class DataStorage {
 
         // DB insert
         if ($revokedDate == "") {
-            $query = "INSERT INTO tblCompetences (id ,idUTeacher, idUStudent, idSkill, beginDate, revokedDate, masteringLevel, competenceInfosHashCryptPrivUT) VALUES (NULL , '$idUTeacher', '$idUStudent', '$idSkill', '$beginDate', NULL, '$masteringLevel', '$competenceInfosHashCryptPrivUT');";
+            $query = "INSERT INTO tblCompetences (id ,idUTeacher, idUStudent, idSkill, beginDate, revokedDate, masteringLevel, imgCUrl, competenceInfosHashCryptPrivUT) VALUES (NULL , '$idUTeacher', '$idUStudent', '$idSkill', '$beginDate', NULL, '$masteringLevel', '$imgCUrl', '$competenceInfosHashCryptPrivUT');";
         } else {
-            $query = "INSERT INTO tblCompetences (id ,idUTeacher, idUStudent, idSkill, beginDate, revokedDate, masteringLevel, competenceInfosHashCryptPrivUT) VALUES (NULL , '$idUTeacher', '$idUStudent', '$idSkill', '$beginDate', '$revokedDate', '$masteringLevel', '$competenceInfosHashCryptPrivUT');";
+            $query = "INSERT INTO tblCompetences (id ,idUTeacher, idUStudent, idSkill, beginDate, revokedDate, masteringLevel, imgCUrl, competenceInfosHashCryptPrivUT) VALUES (NULL , '$idUTeacher', '$idUStudent', '$idSkill', '$beginDate', '$revokedDate', '$masteringLevel', '$imgCUrl', '$competenceInfosHashCryptPrivUT');";
         }
         $success = $db->query($query);
 
@@ -189,6 +189,7 @@ class DataStorage {
             $data['beginDate'] = $row['beginDate'];
             $data['revokedDate'] = $row['revokedDate'];
             $data['masteringLevel'] = $row['masteringLevel'];
+            $data['imgCUrl'] = $row['imgCUrl'];
             $data['competenceInfosHashCryptPrivUT'] = $row['competenceInfosHashCryptPrivUT'];
         }
         $result->close();
@@ -322,7 +323,8 @@ class DataStorage {
             $data['idSkill'] = $row['idSkill'];
             $data['beginDate'] = $row['beginDate'];
             $data['revokedDate'] = $row['revokedDate'];
-            $data['masteringLevel'] = $row['masteringLevel'];   
+            $data['masteringLevel'] = $row['masteringLevel'];
+            $data['imgCUrl'] = $row['imgCUrl'];
             $data['competenceInfosHashCryptPrivUT'] = $row['competenceInfosHashCryptPrivUT'];
             $competences[] = $data;
         }
