@@ -30,27 +30,56 @@
   </head>
 
 
+<body>
 
-  <!-- Body -->
-  <body>
-    <!-- Wrapper -->
-    <div class='wrapper'>
+<!-- NAVBAR (si tu l’as déjà) -->
+<nav class="mobile-navbar">
+    <div class="nav-header">
+        <span class="nav-title">SAE32</span>
+    </div>
+</nav>
 
-				<h1>Ajouter un utilisateur</h1>
-					<ul>
+<!-- PAGE -->
+<div class="home-page">
 
-          </ul>
-    <!-- Champ des utilisateurs-->
-     
-    <li>
-        <input type='text' name='firstName' placeholder='Nom' pattern='[a-z0-9]{0,20}' required autofocus/>
-        <input type='text' name='lastName' placeholder='Prénom' pattern='[a-z0-9]{0,20}' required />
-        <input type='text' name='nickname' placeholder='speudo' pattern='[a-z0-9]{0,20}' required />
-    		<button id= "btnOK" type='submit'  > OK</button>
-    </li>
+    <div class="home-card">
 
+        <h1>Tableau de bord</h1>
+        <p class="home-subtitle">
+            Accès rapide aux fonctionnalités
+        </p>
 
+        <div class="home-actions">
+
+            <a href="addUser.html" class="home-btn">
+                Ajouter un utilisateur
+            </a>
+
+            <a href="addSkill.html" class="home-btn">
+                 Ajouter une compétence
+            </a>
+
+            <a href="addCompetence.html" class="home-btn">
+                Ajouter une compétence utilisateur
+            </a>
+
+            <a href="inputTeacher.php" class="home-btn">
+                saisir un enseignant
+            </a>
+
+            <a href="inputStudent.php" class="home-btn">
+                Saisir un étudiant
+            </a>
+
+            <a href="inputCompetence.php" class="home-btn">
+               Saisir une compétence
+            </a>
+
+        </div>
 
     </div>
-  </body>
+
+</div>
+
+</body>
 </html>
