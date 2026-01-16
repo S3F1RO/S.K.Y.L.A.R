@@ -82,7 +82,7 @@ elif (( $# == 3 )); then
 
     # Backup
     if (( $bOpt == 1 )); then
-      /home/vone/.scripts/Linux/filesbackup -p $SUDOOPT "$f";
+      /var/www/html/gitSAE32/working-v1.4\(signature\)/imgWebService/StickerGenerator/ScriptsAutocollant/filesbackup -p $SUDOOPT "$f";
     fi
 
     # Line
@@ -95,7 +95,7 @@ elif (( $# == 3 )); then
       $SUDO cat "$f" | perl -pe "s/$SEARCH/$REPLACE/g";
     else
       # Create temporary file
-      filesrename -f -c $SUDOOPT "$f" "$REPLACEDFILE";
+      /var/www/html/gitSAE32/working-v1.4\(signature\)/imgWebService/StickerGenerator/ScriptsAutocollant/filesrename -f -c $SUDOOPT "$f" "$REPLACEDFILE";
 
       # Replace in temporary file
       # Test path
@@ -107,7 +107,7 @@ elif (( $# == 3 )); then
 
       # Override original file
       if (( $tOpt == 0 )); then
-        filesrename -f $SUDOOPT "$REPLACEDFILE" "$f";
+        /var/www/html/gitSAE32/working-v1.4\(signature\)/imgWebService/StickerGenerator/ScriptsAutocollant/filesrename -f $SUDOOPT "$REPLACEDFILE" "$f";
       fi
     fi
   done
