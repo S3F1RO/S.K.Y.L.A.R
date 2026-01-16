@@ -47,7 +47,8 @@
   $data = sendAjax($URL . "svcAddCompetence.php", $competence);
 
   // Check response
-  if (!$data["success"]) fail($html);
+  if (!$data["success"]) fail($data["html"]);
+  // if (!$data["success"]) fail($html);
   else success(["idCompetence" => $data["idCompetence"]]);
 
 ?>
