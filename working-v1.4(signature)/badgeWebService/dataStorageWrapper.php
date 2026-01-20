@@ -99,7 +99,7 @@
         }
     }
 
-    function addVerifiedCompetence(string $idUTeacher, string $idUStudent, string $idSkill, string $beginDate, string $revokedDate, int $masteringLevel, string $competenceInfosHashCryptPrivUT) {
+    function addVerifiedCompetence(string $idUTeacher, string $idUStudent, string $idSkill, string $beginDate, string $revokedDate, int $masteringLevel, string $imgCUrl, string $competenceInfosHashCryptPrivUT) {
         $data = $idUTeacher . $idUStudent . $idSkill . $beginDate . $revokedDate . $masteringLevel;
         $pubUT = getVerifiedUser($idUTeacher)["pubU"];
 
@@ -108,13 +108,13 @@
         $competences = getStudentVerifiedCompetences($idUTeacher);
         $skill = getVerifiedSkill($idSkill);
         foreach ($competences as $competence) {
-          if ($competence["masteringLevel"] == 4) {
+          if ($competence["masteringLevel"] == 4 && $competence["skill"]["idSkill"] == $idSkill) {
             $isTeacher = true;
           }
         }
         
         if (($isTeacher || $skill["idUCreator"] == $idUTeacher) && verifyData($pubUT, $competenceInfosHashCryptPrivUT, $data)) {
-            return DataStorage::addCompetence($idUTeacher, $idUStudent, $idSkill, $beginDate, $revokedDate, $masteringLevel, $competenceInfosHashCryptPrivUT);
+            return DataStorage::addCompetence($idUTeacher, $idUStudent, $idSkill, $beginDate, $revokedDate, $masteringLevel, $imgCUrl, $competenceInfosHashCryptPrivUT);
         } else {
             return NULL;
         }

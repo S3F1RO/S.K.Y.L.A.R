@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html>
+  <!-- Head -->
+  <head>
+    <!-- CSS files -->
+    <link rel='stylesheet' type='text/css' href='./css/web1.css' media='screen' />
+    <!-- <link rel='stylesheet' type='text/css' href='./css/00_reset.css' media='screen' /> -->
+    <!-- <link rel='stylesheet' type='text/css' href='./css/01_mobile.css' media='screen' /> -->
+    <link rel='stylesheet' type='text/css' href='./css/02_fonts.css' media='screen' />
+    <link rel='stylesheet' type='text/css' href='./css/03_icons.css' media='screen' />
+
+    <!-- JS files -->
+    <script type='text/javascript' src='./js/jquery-3.7.0.min.js'></script>
+    <script type='text/javascript' src='./js/ajaxAddUser.js'></script> 
+    <!-- <script type='text/javascript' src='./js/refresh1s.js'></script> -->
+    <script type='text/javascript' src='./js/web1.js'></script>
+    <!-- UTF8 encoding -->
+    <meta charset='UTF-8'>
+
+    <!-- Prevent from zooming -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0,  shrink-to-fit=no"> -->
+
+    <!-- Icon -->
+    <link rel='icon' type='image/png' href='./medias/iut.png' />
+
+    <!-- Title -->
+    <title>Client</title>
+  </head>
+
+
+
+  <!-- Body -->
+  <body>
+    <!-- Wrapper -->
+    <div class='wrapper'>
+
+				<h1>API Documentation</h1>
+        <!-- Champ des utilisateurs-->
+     
+        <ul>
+  <!-- addUser -->
+  <li>
+    <h4 class="slidable">addUser</h4>
+    <ul>
+      <li>
+        <p>Creates a user to the database</p>
+        <h5>In</h5>
+        <pre>{
+  "firstName": "string", (2 min, 20 max)
+  "lastName": "string", (2 min, 20 max)
+  "nickname": "string", (1 min, 20 max)
+  "pubU": "string", (base64, 2048 max)
+  "userInfosHashCryptPrivU": "string" 
+}</pre>
+      </li> 
+      <li>
+        <h5>Out</h5>
+        <pre>{
+  "lastInsertedId": "int"
+}</pre>
+      </li>
+    </ul>
+  </li>
+
+  <!-- addSkill -->
+  <li>
+    <h4 class="slidable">addSkill</h4>
+    <ul>
+      <li>
+        <p>Creates a skill into the database</p>
+        <h5>In</h5>
+        <pre>{
+  "idUCreator": "int",
+  "mainName": "string", (max size : 20)
+  "subName": "string",  (max size: 20)
+  "domain": "string", (max size: 15)
+  "level": "int", (min value : 0, max value : 8)
+  "imgUrl": "string",
+  "color": "string"
+  "skillInfosHashCryptPrivUC": "string" Infos du créateur hashées et cryptées avec sa clé privée (sha256)
+}</pre>
+      </li>
+      <li>
+        <h5>Out</h5>
+        <pre>{
+  "lastInsertedId": "int"
+}</pre>
+      </li>
+    </ul>
+  </li>
+
+  <!-- addCompetence -->
+  <li>
+    <h4 class="slidable">addCompetence</h4>
+    <ul>
+      <li>
+        <p>Creates a "competence" into the database</p>
+        <h5>In</h5>
+        <pre>{
+  "idUTeacher": "int",
+  "idUStudent": "int",
+  "idSkill": "int",
+  "revokedDate": "string"
+  "masteryLevel": "int" 
+  "competenceInfosHashCryptPrivUT" : "string" Infos du teacher hashées puis cryptées avec sa clé privé (sha256) (max size: 2048)
+
+}</pre>
+      </li>
+      <li>
+        <h5>Out</h5>
+        <pre>{
+  "lastInsertedId": "int"
+}</pre>
+      </li>
+    </ul>
+  </li>
+
+  <!-- getUser -->
+  <li>
+    <h4 class="slidable">getUser</h4>
+    <ul>
+      <li>
+        <p>Gets a user and their infos by their id number</p>
+        <h5>In</h5>
+        <pre>{
+  "idUser": "int"
+}</pre>
+      </li>
+      <li>
+        <h5>Out</h5>
+        <pre>{
+  "idUser": "int",
+  "firstName": "string",
+  "lastName": "string",
+  "nickname": "string",
+  "pubU": "string",
+  "userInfosHashCryptPrivU": "string"
+}</pre>
+      </li>
+    </ul>
+  </li>
+
+  <!-- getSkill -->
+  <li>
+    <h4 class="slidable">getSkill</h4>
+    <ul>
+      <li>
+        <p>Gets a skill and its infos by its id number</p>
+        <h5>In</h5>
+        <pre>{
+  "idSkill": "int"
+}</pre>
+      </li>
+      <li>
+        <h5>Out</h5>
+        <pre>{
+  "idSkill": "int",
+  "idUCreator": "int",
+  "mainName": "string",
+  "subName": "string",
+  "domain": "string",
+  "level": "int",
+  "imgUrl": "string"
+}</pre>
+      </li>
+    </ul>
+  </li>
+  <!-- getCompetence -->
+  <li>
+    <h4 class="slidable">getCompetence</h4>
+    <ul>
+      <li>
+        <p>Gets a competence and its infos by its id number</p>
+        <h5>In</h5>
+        <pre>{
+  "idCompetence": "int"
+}</pre>
+      </li>
+      <li>
+        <h5>Out</h5>
+        <pre>{
+  "idCompetence": "int",
+  "idUTeacher": "int",
+  "idUStudent": "int",
+  "idSkill": "int",
+  "domain": "string",
+  "level": "int",
+  "imgUrl": "string"
+}</pre>
+      </li>
+    </ul>
+  </li>
+
+   <!-- getFullSkill -->
+  <li>
+    <h4 class="slidable">getFullSkill</h4>
+    <ul>
+      <li>
+        <p>Gets a skill and its creator's infos by its id number</p>
+        <h5>In</h5>
+        <pre>{
+  "idSkill": "int"
+}</pre>
+      </li>
+      <li>
+        <h5>Out</h5>
+        <pre>{
+  "idSkill": "int",
+  "idUCreator": "int",
+            {
+            "firstName": "string",
+            "lastName": "string",
+            "nickname": "string",
+            "pubU": "string",
+            "userInfosHashCryptPrivU": "string"
+            }
+  "mainName": "string",
+  "subName": "string",
+  "domain": "string",
+  "level": "int",
+  "imgUrl": "string"
+}</pre>
+      </li>
+    </ul>
+  </li>
+     <!-- getFullCompetence -->
+  <li>
+    <h4 class="slidable">getFullCompetence</h4>
+    <ul>
+      <li>
+        <p>Gets infos on a competence, infos about teachers who gave it and student who got it by its id number</p>
+        <h5>In</h5>
+        <pre>{
+  "idCompetence": "int"
+}</pre>
+      </li>
+      <li>
+        <h5>Out</h5>
+        <pre>{
+  "idCompetence": "int",
+  "idUTeacher": "int",
+            {
+            "firstName": "string",
+            "lastName": "string",
+            "nickname": "string",
+            "pubU": "string",
+            "userInfosHashCryptPrivU": "string"
+            }
+  "idUStudent": "int",
+            {
+            "firstName": "string",
+            "lastName": "string",
+            "nickname": "string",
+            "pubU": "string",
+            "userInfosHashCryptPrivU": "string"
+            }
+  "idSkill": "int",
+  "domain": "string",
+  "level": "int",
+  "imgUrl": "string"
+}</pre>
+      </li>
+    </ul>
+  </li>
+</ul>
+    </div>
+  </body>
+</html>

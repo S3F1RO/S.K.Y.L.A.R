@@ -181,7 +181,7 @@ span {
   }
 
   /* Image principale */
-  body > header > img {
+  body > header img {
     display: block;
     width: 100%;
     max-height: 180px;
@@ -199,7 +199,7 @@ span {
     padding: 8px;
   }
 
-  body > header.scrolled > img {
+  body > header.scrolled img {
     max-height: 64px;
   }
 
@@ -458,7 +458,7 @@ span {
       box-shadow: 0 2px 6px rgba(0,0,0,0.6);
     }
 
-    body > header > img {
+    body > header img {
       background-color: #2a2e33;
     }
 
@@ -591,3 +591,143 @@ img {
 	background-color: deeppink;
 	width: 150px;
 } */
+
+
+/* ===========================
+   Media query : TABLETTE
+   =========================== */
+@media (min-width: 600px) and (max-width: 1200px) {
+
+  /* ===========================
+     BASE
+     =========================== */
+  body {
+    padding: 20px 40px 80px;
+    font-size: 16px;
+  }
+
+  /* ===========================
+     HEADER
+     =========================== */
+  body > header {
+    position: sticky;
+    top: 0;
+    padding: 16px 24px;
+    border-radius: 14px;
+  }
+
+  body > header > img {
+    max-height: 140px;
+    margin-bottom: 10px;
+  }
+
+  header h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  body > header > ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 4px;
+    column-gap: 16px;
+  }
+
+  body > header > ul > li:first-child {
+    grid-column: span 2;
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  body > header button {
+    margin-top: 10px;
+    padding: 12px 60px;
+    font-size: 16px;
+  }
+
+  /* Header compact au scroll */
+  body > header.scrolled > img {
+    max-height: 80px;
+  }
+
+  /* ===========================
+     ARTICLE
+     =========================== */
+  body > article {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  article > h1 {
+    font-size: 22px;
+    margin-top: 10px;
+  }
+
+  /* ===========================
+     CARTES COMPÉTENCES
+     =========================== */
+  body > article ul {
+    padding: 16px;
+    border-radius: 14px;
+
+    /* Passage en cartes larges */
+    grid-template-columns: 56px 1fr;
+    column-gap: 14px;
+  }
+
+  body > article ul > li.img img {
+    width: 48px;
+    height: 48px;
+  }
+
+  body > article ul > li:not(.img) {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  body > article ul > li:not(.img):first-of-type {
+    font-size: 1.05rem;
+  }
+
+  /* ===========================
+     SECTION FIXE
+     =========================== */
+  section {
+    position: relative;
+    margin: 20px auto;
+    max-width: 900px;
+    padding: 30px;
+  }
+
+  section article button {
+    padding: 12px 25%;
+    font-size: 16px;
+  }
+
+  /* ===========================
+     NAVIGATION BASSE
+     =========================== */
+  body > nav {
+    height: 64px;
+  }
+
+  body > nav > a {
+    font-size: 1.6rem;
+  }
+
+  body > nav > a i {
+    font-size: 5vw;
+  }
+
+  .profile {
+    font-size: 4.5vw;
+  }
+
+  .plus {
+    padding-bottom: 4%;
+  }
+
+  .magnifyingGlass {
+    padding-bottom: 2%;
+  }
+}

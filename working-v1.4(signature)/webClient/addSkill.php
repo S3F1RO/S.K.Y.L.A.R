@@ -43,10 +43,8 @@
     <link rel='icon' type='image/png' href='./medias/RTSAE.png'/>
 
     <!-- Title -->
-    <title>Skills</title>
+    <title>Certisûr - Ajout skills</title>
   </head>
-
-
 
   <!-- Body -->
   <body>
@@ -58,16 +56,19 @@
       <article>
         <ul>
           <li>
-            <input type='text' name='mainName' placeholder='Le titre' pattern='[a-z0-9]{0,20}' required autofocus/>
+            <input type='text' name='mainName'  maxlength="20" placeholder='Le titre' autofocus/>
           </li>
           <li>
-            <input type='text' name='subName' placeholder='Sous-titre' pattern='[a-z0-9]{0,20}'/>
+            <input type='text' name='subName' maxlength="20" placeholder='Sous-titre'/>
           </li>
           <li>
-            <input type='text' name='domain' placeholder='Le domain' pattern='[a-z0-9]{0,20}' required />
+            <input type='text' name='domain' maxlength="15" placeholder='Le domain'/>
           </li>
           <li>
-            <input type="range" name="level" min = "0" max = "8" step = "1" value = "8" required />
+            <input type='file' maxlength="20" name='file'/> 
+          </li>
+          <li>
+            <input type="range" name="level" min = "0" max = "8" step = "1" value = "8"/>
           </li>
           <li>
             <input type="color" value="#FF0000"/>
