@@ -45,7 +45,7 @@
     <link rel='icon' type='image/png' href='./medias/RTSAE.png' />
 
     <!-- Title -->
-    <title>Certisûr - recherche par ID</title>
+    <title>SKYLAR - recherche par ID</title>
   </head>
 
 
@@ -62,9 +62,9 @@
           <li>
             <select name="idType" size = "1">
               <option selected>Que recherchez-vous...</option>
-              <option value="idC">Une ou plusier compétence(s). Ex: 1,2,3</option>
-              <option value="idS">Les competences d'un utilisateur</option>
-              <option value="idT">Les compétences donné par un utilisateur</option>
+              <option value="idC">Une ou plusieurs compétence(s). Ex: 1,2,3</option>
+              <option value="idS">Les compétences d'un utilisateur</option>
+              <option value="idT">Les compétences données par un utilisateur</option>
             </select >
           </li>
           <li>

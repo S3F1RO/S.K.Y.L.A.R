@@ -17,14 +17,21 @@
   
   $articleCreatorHtml = "";
   $articleTeacherHtml = "";
-  $errorHtml = "      <ul>\n";
-  $errorHtml .= "        <li class='img'><img src='medias/error.png' alt='error'></li>\n";
-  $errorHtml .= "        <li><span>Aucune aptitude trouver (눈_눈)</span></li>\n";
-  $errorHtml .= "      </ul>\n\n";
+  $errorSHtml = "      <ul>\n";
+  $errorSHtml .= "        <li class='img'><img src='medias/error.png' alt='error'></li>\n";
+  $errorSHtml .= "        <li><span>Aucune aptitude trouvée (눈_눈)</span></li>\n";
+  $errorSHtml .= "        <li><span>Créée une aptitude pour en distribuer !!</span></li>\n";
+  $errorSHtml .= "      </ul>\n\n";
+
+  $errorCHtml = "      <ul>\n";
+  $errorCHtml .= "        <li class='img'><img src='medias/error.png' alt='error'></li>\n";
+  $errorCHtml .= "        <li><span>Aucune aptitude trouvée (눈_눈)</span></li>\n";
+  $errorCHtml .= "        <li><span>Obtiens une aptitude au niveau de maîtrise maximum pour en distribuer !!</span></li>\n";
+  $errorCHtml .= "      </ul>\n\n";
 
   $data = ['idCreator' => $idTeacher];
   $skills = sendAjax($URL . "svcGetSkills.php", $data);
-  if (!$skills['success']) $articleCreatorHtml = $errorHtml;
+  if (!$skills['success']) $articleCreatorHtml = $errorSHtml;
   else {
     $name = $skills['skills'][0]['creator']["nickname"];
     for ($i = 0 ; $i < count($skills['skills']) ; $i++) {
@@ -41,7 +48,7 @@
   $data = ['idStudent' => $idTeacher];
   $competences = sendAjax($URL . "svcGetCompetences.php", $data);
   
-  if (!$competences['success']) $articleTeacherHtml = $errorHtml;
+  if (!$competences['success']) $articleTeacherHtml = $errorCHtml;
   else {
     $name = $competences['competences'][0]['teacher']["nickname"];
     for ($i = 0 ; $i < count($competences['competences']) ; $i++) {
@@ -67,7 +74,7 @@
   <!-- Head -->
   <head>
     <!-- CSS files -->
-    <link rel='stylesheet' type='text/css' href='./css/web.css' media='screen' />
+    <link rel='stylesheet' type='text/css' href='./css/webCompetences.css' media='screen' />
     <!-- <link rel='stylesheet' type='text/css' href='./css/01_mobile.css' media='screen' /> -->
     <link rel='stylesheet' type='text/css' href='./css/03_icons.css' media='screen' />
 
@@ -86,7 +93,7 @@
     <link rel='icon' type='image/png' href='./medias/RTSAE.png'/>
 
     <!-- Title -->
-    <title>Certisûr - Compétence</title>
+    <title>SKYLAR - Compétence</title>
   </head>
 
   <!-- Body -->

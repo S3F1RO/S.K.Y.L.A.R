@@ -43,13 +43,13 @@
     <link rel='icon' type='image/png' href='./medias/RTSAE.png'/>
 
     <!-- Title -->
-    <title>Certisûr - Ajout skills</title>
+    <title>SKYLAR - Ajout d'aptitude</title>
   </head>
 
   <!-- Body -->
   <body>
     <section>
-      <h1>Ajout de skills</h1>
+      <h1>Ajout d'aptitude</h1>
       <span></span>
           
       <!-- Skills field --> 
@@ -68,7 +68,7 @@
             <input type='file' name='file'/> 
           </li>
           <li>
-            <input type="range" name="level" min = "0" max = "8" step = "1" value = "8"/>
+            <input type="range" name="level" min = "0" max = "8" step = "1" value = "0"/>
           </li>
           <li>
             <input type="color" value="#FF0000"/>

@@ -20,7 +20,8 @@
   $articleHtml = "";
   $errorHtml = "     <img src='medias/error.png' alt='error'>\n";
   $errorHtml .= "      <ul>\n";
-  $errorHtml .= "        <li><span>Auccune aptitude trouver (눈_눈)</span></li>\n";
+  $errorHtml .= "        <li><span>Aucune aptitude trouvée (눈_눈)</span></li>\n";
+  $errorHtml .= "        <li><span>Finir un TP pour en obtenir</span></li>\n";
   $errorHtml .= "      </ul>\n\n";
   
   if (isset($_GET['idC']) && $_GET['idC'] != "") {
@@ -45,7 +46,7 @@
       $sectionHtml .= "\n          <li>N° d'aptitude : " . $competences['competences'][0]['idSkill'] . "</li>";
       $sectionHtml .= "\n          <li>N° de compétence : " . $competences['competences'][0]['idCompetence'] . "</li>";
       if ($competences['competences'][0]["skill"]['creator']["nickname"] == $competences['competences'][0]['teacher']["nickname"]) {
-        $sectionHtml .= "\n          <li>Créé et donner par : " . $competences['competences'][0]["skill"]['creator']["nickname"] . "</li>";
+        $sectionHtml .= "\n          <li>Créée et donnée par : " . $competences['competences'][0]["skill"]['creator']["nickname"] . "</li>";
       } else {
         $sectionHtml .= "\n          <li>Créateur : " . $competences['competences'][0]["skill"]['creator']["nickname"] . "</li>";
         $sectionHtml .= "\n          <li>Donné par : " . $competences['competences'][0]['teacher']["nickname"] . "</li>";
@@ -176,7 +177,7 @@
     }
   }
   
-  if ($sectionHtml == NULL) $sectionHtml = "<h1>Auccune compétences trouver</h1>" 
+  if ($sectionHtml == NULL) $sectionHtml = "<h1>Aucune compétences trouvées </h1>" 
 
 ?>
 <!DOCTYPE html>
@@ -185,7 +186,7 @@
   <!-- Head -->
   <head>
     <!-- CSS files -->
-    <link rel='stylesheet' type='text/css' href='./css/web.css' media='screen' />
+    <link rel='stylesheet' type='text/css' href='./css/webCompetences.css' media='screen' />
     <!-- <link rel='stylesheet' type='text/css' href='./css/01_mobile.css' media='screen' /> -->
     <link rel='stylesheet' type='text/css' href='./css/03_icons.css' media='screen' />
 
@@ -204,7 +205,7 @@
     <link rel='icon' type='image/png' href='./medias/RTSAE.png' />
 
     <!-- Title -->
-    <title>Certisûr</title>
+    <title>SKYLAR</title>
     <body>
 
       <header>

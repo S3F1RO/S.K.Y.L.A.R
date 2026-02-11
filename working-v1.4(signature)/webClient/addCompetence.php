@@ -46,7 +46,7 @@
     <link rel='icon' type='image/png' href='./medias/RTSAE.png'/>
 
     <!-- Title -->
-    <title>Certisûr - ajout aptitude</title>
+    <title>SKYLAR - Ajout compétence</title>
   </head>
 
   <!-- Body -->
